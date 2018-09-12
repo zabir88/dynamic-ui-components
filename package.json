@@ -1,21 +1,21 @@
 {
   "name": "zh-ui-library",
-  "version": "0.1.0",
-  "author": "Zabir Hossain", 
+  "version": "0.2.0",
+  "author": "Zabir Hossain",
   "description": "React component Based UI Library",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "files": [ "dist", "README.md" ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/zabir88"
   },
-  "dependencies": {
-    "bootswatch": "^4.1.3",
-    "font-awesome": "^4.7.0"
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "bootswatch": "^4.1.3",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-scripts": "1.1.5"

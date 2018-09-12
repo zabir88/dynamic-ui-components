@@ -6,30 +6,27 @@ var form = function form(props) {
   var inputElement = [];
 
   for (var key in props.formInputs) {
-    formElementsArray.push({
-      id: key,
-      config: props.formInputs[key]
-    });
+    formElementsArray.push(props.formInputs[key]);
   };
 
   if (props.sort) {
     formElementsArray.sort(function (a, b) {
-      return a.config.order - b.config.order;
+      return a.order - b.order;
     });
   };
 
   formElementsArray.forEach(function (formElement) {
-    switch (formElement.config.elementType) {
+    switch (formElement.elementType) {
       case 'input':
-        if (formElement.config.elementConfig.type === 'submit') {
-          inputElement.push(React.createElement('input', Object.assign({}, formElement.config.elementConfig, { value: formElement.config.value })));
-        } else if (formElement.config.elementConfig.type === 'checkbox') {
-          inputElement.push(formElement.config.label === undefined ? null : React.createElement(
+        if (formElement.elementConfig.type === 'submit') {
+          inputElement.push(React.createElement('input', formElement.elementConfig));
+        } else if (formElement.elementConfig.type === 'checkbox') {
+          inputElement.push(formElement.label === undefined ? null : React.createElement(
             'label',
             null,
-            formElement.config.label
+            formElement.label
           ));
-          inputElement.push(formElement.config.elementConfig.options.map(function (option, i) {
+          inputElement.push(formElement.elementConfig.options.map(function (option, i) {
             return React.createElement(
               'div',
               { className: 'form-group', key: i },
@@ -39,21 +36,21 @@ var form = function form(props) {
                 React.createElement(
                   'label',
                   { className: 'form-check-label' },
-                  React.createElement('input', Object.assign({}, formElement.config.elementConfig, { defaultChecked: option.defaultChecked, value: option.value, id: formElement.id, onChange: props.changed })),
+                  React.createElement('input', Object.assign({}, formElement.elementConfig, { defaultChecked: option.defaultChecked, value: option.value, onChange: props.changed })),
                   option.displayValue
                 )
               )
             );
           }));
         }
-        // else if(formElement.config.elementConfig.type === 'radio') {
+        // else if(formElement.elementConfig.type === 'radio') {
         //   inputElement.push(
         //     <div>
-        //       <label>{formElement.config.elementConfig.label}</label>
+        //       <label>{formElement.elementConfig.label}</label>
 
         //       <label className="form-check-label">
-        //         <input {...formElement.config.elementConfig} value={formElement.config.value} id={formElement.id} onChange={props.changed} /> 
-        //         {formElement.config.elementConfig.displayValue}
+        //         <input {...formElement.elementConfig} value={formElement.value} id={formElement.id} onChange={props.changed} /> 
+        //         {formElement.elementConfig.displayValue}
         //       </label>
         //     </div>
         //   );
@@ -61,17 +58,17 @@ var form = function form(props) {
         else {
             inputElement.push(React.createElement(
               'div',
-              { className: 'form-group ' + formElement.config.errorClass },
-              formElement.config.label === undefined ? null : React.createElement(
+              { className: 'form-group' },
+              formElement.label === undefined ? null : React.createElement(
                 'label',
                 null,
-                formElement.config.label
+                formElement.label
               ),
-              React.createElement('input', Object.assign({}, formElement.config.elementConfig, { value: formElement.config.value, id: formElement.id, onChange: props.changed })),
-              formElement.config.errorMessage === null ? null : React.createElement(
+              React.createElement('input', Object.assign({}, formElement.elementConfig, { onChange: props.changed })),
+              formElement.errorMessage === undefined ? null : React.createElement(
                 'div',
                 { className: 'text-center text-danger' },
-                formElement.config.errorMessage
+                formElement.errorMessage
               )
             ));
           }
@@ -80,16 +77,16 @@ var form = function form(props) {
         inputElement.push(React.createElement(
           'div',
           { className: 'form-group' },
-          formElement.config.label === undefined ? null : React.createElement(
+          formElement.label === undefined ? null : React.createElement(
             'label',
             null,
-            formElement.config.label
+            formElement.label
           ),
-          React.createElement('textarea', Object.assign({}, formElement.config.elementConfig, { id: formElement.key, value: formElement.config.value, onChange: props.changed })),
-          formElement.config.errorMessage === null ? null : React.createElement(
+          React.createElement('textarea', Object.assign({}, formElement.elementConfig, { onChange: props.changed })),
+          formElement.errorMessage === undefined ? null : React.createElement(
             'div',
             { className: 'text-center text-danger' },
-            formElement.config.errorMessage
+            formElement.errorMessage
           )
         ));
         break;
@@ -97,15 +94,15 @@ var form = function form(props) {
         inputElement.push(React.createElement(
           'div',
           { className: 'form-group' },
-          formElement.config.label === undefined ? null : React.createElement(
+          formElement.label === undefined ? null : React.createElement(
             'label',
             null,
-            formElement.config.label
+            formElement.label
           ),
           React.createElement(
             'select',
-            { className: formElement.config.elementConfig.className, id: formElement.id, value: formElement.config.value, onChange: props.changed },
-            formElement.config.elementConfig.options.map(function (option, i) {
+            Object.assign({}, formElement.elementConfig, { onChange: props.changed }),
+            formElement.options.map(function (option, i) {
               return React.createElement(
                 'option',
                 { key: i, value: option.value, disabled: option.disabled ? true : false },
@@ -113,18 +110,18 @@ var form = function form(props) {
               );
             })
           ),
-          formElement.config.errorMessage === null ? null : React.createElement(
+          formElement.errorMessage === undefined ? null : React.createElement(
             'div',
             { className: 'text-center text-danger' },
-            formElement.config.errorMessage
+            formElement.errorMessage
           )
         ));
         break;
       case 'button':
         inputElement.push(React.createElement(
           'button',
-          Object.assign({}, formElement.config.elementConfig, { onClick: formElement.config.cancelHandler }),
-          formElement.config.value
+          Object.assign({}, formElement.elementConfig, { onClick: formElement.cancelHandler }),
+          formElement.elementConfig.value
         ));
         break;
       default:
