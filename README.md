@@ -1,5 +1,5 @@
 # ZH-UI-Library
-A UI library of React components created using `create-react-app` and `bootstrap`.
+A library of UI components created using `react.js` and `bootstrap`.
 
 ## Dependecies 
 Bootswatch (a variation of the bootsrap framework).
@@ -32,12 +32,12 @@ this.state = {
 		name: {
 			elementType: 'input',
 			elementConfig: {
-		    type: 'text',
-		    value: '',
-		    placeholder: 'Name',
-		    id: 'name',
-		    className: 'form-control'
-		  }
+			  type: 'text',
+			  value: '',
+			  placeholder: 'Name',
+			  id: 'name',
+			  className: 'form-control'
+			}
 		},
 		usCitizenship: {
 		  elementType: 'select',
@@ -66,7 +66,7 @@ this.state = {
 	};
 };
 ```
-Finally the call the component:
+Finally call the component:
 ```
 <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} sort={true} formStyling={{topPadding: '20px'}} submit={this.submitDataHandler.bind(this))}/>
 ```
