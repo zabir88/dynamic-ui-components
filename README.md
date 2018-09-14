@@ -23,6 +23,8 @@ Takes the following props attributes:
 4. formStyling: takes style object.
 5. submit: takes submit handler function to submit the data.
 
+Currently the form supports dropdowns, date field, number field, text field, password field, email field, textareas and check-boxes.
+
 Use case example: 
 ```
 this.state = {
@@ -30,45 +32,44 @@ this.state = {
 		name: {
 			elementType: 'input',
 			elementConfig: {
-        type: 'text',
-        value: '',
-        placeholder: 'Name',
-        id: 'name',
-        className: 'form-control'
-      }
+		    type: 'text',
+		    value: '',
+		    placeholder: 'Name',
+		    id: 'name',
+		    className: 'form-control'
+		  }
 		},
 		usCitizenship: {
-      elementType: 'select',
-      label: 'US Citizenship',
-      elementConfig: {
-        value: 'Please select one',
-        id: 'usCitizenship',
-        className: 'form-control' 
-      },
-      options: [
-        {value: 'Please select one', displayValue: 'Please select one', disabled: true},
-        {value: 'Yes', displayValue: 'Yes', disabled: false},
-        {value: 'No', displayValue: 'No', disabled: false}
-      ]
-    },
-    description: {
-      elementType:'textarea',
-      label: 'Description',
-      elementConfig: {
-        value: '',
-        id:'description',
-        placeholder: 'Please enter description...',
-        className: 'form-control'
-      }
-    }
-	}
+		  elementType: 'select',
+		  label: 'US Citizenship',
+		  elementConfig: {
+		    value: 'Please select one',
+		    id: 'usCitizenship',
+		    className: 'form-control' 
+		  },
+		  options: [
+		    {value: 'Please select one', displayValue: 'Please select one', disabled: true},
+		    {value: 'Yes', displayValue: 'Yes', disabled: false},
+		    {value: 'No', displayValue: 'No', disabled: false}
+		  ]
+		},
+		description: {
+		  elementType:'textarea',
+		  label: 'Description',
+		  elementConfig: {
+		    value: '',
+		    id:'description',
+		    placeholder: 'Please enter description...',
+		    className: 'form-control'
+		  }
+		}
+	};
 };
-
+```
+Finally the call the component:
+```
 <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} sort={true} formStyling={{topPadding: '20px'}} submit={this.submitDataHandler.bind(this))}/>
 ```
-
-Currently the form supports dropdowns, date field, number field, text field, password field, email field, textareas and check-boxes.
-
 ### Flash Message
 Takes the following props attributes:
 1. message: Displayed Message srting.
