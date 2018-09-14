@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import Form from './lib/Form';
+import FlashMessage from './lib/FlashMessage';
 
 class App extends Component {
   state = {
+    flashMessage: {
+      message: 'Thank You!',
+      messageType: 'success',  
+    },
     formInputs: {
       name: {
         elementType: 'input',
@@ -34,10 +39,10 @@ class App extends Component {
         elementConfig: {
           value: '',
           id:'description',
+          placeholder: 'Please enter description...',
           className: 'form-control'
         }
       }
-
     } 
   }
 
@@ -47,15 +52,24 @@ class App extends Component {
     this.setState({formInputs: updatedFormInputs});
   }
 
+  closeFlashHandler = () => {
+    const updatedFlashMessage = {...this.state.flashMessage};
+    updatedFlashMessage.message = null;
+    updatedFlashMessage.messageType = null;
+    this.setState({flashMessage: updatedFlashMessage});
+  }
+
   render() {
-    return (
-      <div className="container">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to ZH-UI-Library</h1>
-        </header>
-        <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)}/>
+    let display =  (
+      <div className="container" style={{paddingTop: '50px'}}>
+        <h1 className="text-center">Welcome to ZH-UI-Library</h1>
+        <br/>
+        <FlashMessage message={this.state.flashMessage.message} messageType={this.state.flashMessage.messageType} dismiss={this.closeFlashHandler.bind(this)}/>
+        <br/>
+        <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)}/>        
       </div>
     );
+    return display
   }
 }
 
