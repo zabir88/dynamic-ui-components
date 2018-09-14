@@ -2,7 +2,7 @@
 A library of UI components created using `react.js` and `bootstrap`.
 
 ## Dependecies 
-Bootswatch (a variation of the bootsrap framework).
+Bootswatch (a variation of the bootstrap framework). For more info please visit [https://bootswatch.com](https://www.bootswatch.com)
 
 ## Installation
 Run the following command:
@@ -11,7 +11,7 @@ Run the following command:
 ## How to use
 Import these files in the index.js file 
 ```
-import 'bootswatch/dist/cerulean/bootstrap.min.css';
+import 'bootswatch/dist/<theme of your choice>/bootstrap.min.css';
 import 'zh-ui-library/dist/<name of component you want to use>'
 ```
 ## List of UI Components currently available
