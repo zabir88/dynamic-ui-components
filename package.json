@@ -2,7 +2,15 @@
   "name": "zh-ui-library",
   "version": "0.2.0",
   "author": "Zabir Hossain",
-  "description": "React component Based UI Library",
+  "person": {
+    "name": "Zabir Hossain",
+    "email": "zabir8809@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/zabir88/zh-ui-library#readme",
+  "description": "Component based UI Library created using react.js and bootstrap",
+  "keywords": ["ui", "library", "bootstrap", "component", "react"],
+  "bugs": "zabir8809@gmail.com",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [

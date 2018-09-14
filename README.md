@@ -1,24 +1,24 @@
 # zh-ui-library
 A UI library of React components created using `create-react-app` and `bootstrap`.
 
-## List of UI Components currently available
+### List of UI Components currently available
 1. Dynamic Form
 2. Flash Message
 
-## Installation
+### Installation
 Run the following command:
 `npm install zh-ui-library --save`
+
 **Dependecies** 
 Bootswatch (a variation of the bootsrap framework).
 
-## How to use
-Import in the index.js file 
+### How to use
+Import these in the index.js file 
 ```
 import 'bootswatch/dist/cerulean/bootstrap.min.css';
 import 'zh-ui-library/dist/<name of component you want to use>'
-
 ```
-### Dynamic Form
+#### Dynamic Form
 Takes the following props attributes: 
 1. formInputs: takes an object. 
 2. changed: takes input event handler function to set/update form input values. 
@@ -33,7 +33,7 @@ Use case example:
 
 Currently the form supports dropdowns, date field, number field, text field, password field, email field, textareas and check-boxes.
 
-### Flash Message
+#### Flash Message
 Takes the following props attributes:
 1. message: Displayed Message srting.
 2. messageType: One of these strings 'success', 'warning', 'primary', 'danger', 'info', 'secondary' or 'light'.
