@@ -1,18 +1,18 @@
 # ZH-UI-Library
 A library of UI components created using `react.js` and `bootstrap`.
 
-## Dependecies 
-Bootswatch (a variation of the bootstrap framework). For more info please visit [https://bootswatch.com](https://www.bootswatch.com)
-
 ## Installation
 Run the following command:
 `npm install zh-ui-library --save`
+
+## Dependecies 
+Bootswatch (a variation of the bootstrap framework). For more info please visit [https://bootswatch.com](https://www.bootswatch.com)
 
 ## How to use
 Import these files in the index.js file 
 ```
 import 'bootswatch/dist/<theme of your choice>/bootstrap.min.css';
-import 'zh-ui-library/dist/<name of component you want to use>'
+import 'zh-ui-library/dist/<name of component you want to use>';
 ```
 ## List of UI Components currently available
 ### Dynamic Form
@@ -66,7 +66,7 @@ this.state = {
 	};
 };
 ```
-Finally call the component:
+Finally call the component
 ```
 <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} sort={true} formStyling={{topPadding: '20px'}} submit={this.submitDataHandler.bind(this))}/>
 ```
@@ -78,6 +78,27 @@ Takes the following props attributes:
 
 Use case example: 
 ```
-<FlashMessage message={this.state.flashMessage.message} messageType={this.state.flashMessage.messageType} dismiss={this.closeFlashHandler.bind(this)}/>
+state = {
+	flashMessage: {
+		message: 'Thank You!',
+		messageType: 'success'
+	}
+};
+
+closeFlashHandler = () => {
+	this.setState(flashMessage: {message: null, messageType: null});
+}
 ```
 
+Finally call the component
+```
+<FlashMessage message={this.state.flashMessage.message} messageType={this.state.flashMessage.messageType} dismiss={this.closeFlashHandler.bind(this)}/>
+```
+### Pagination
+Takes the following props attributes:
+1. links: Array of objects
+2. pageChange: takes page change handler function to change the page and query data.
+
+```
+<Pagination links={this.state.links} pageChange={this.pageChangedHandler} />
+```
