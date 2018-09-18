@@ -9,27 +9,32 @@ class App extends Component {
       message: 'Thank You!',
       messageType: 'success',  
     },
-    links: [
-      { route: '#',
+    links: {
+      1: { 
+        route: '#',
         displayValue: '1',
+        id: 1,
         active: true
       },
-      {
+      2: {
         route: '#',
         displayValue: '2',
+        id: 2,
         active: false
       },
-      {
+      3: {
         route: '#',
         displayValue: '3',
+        id: 3,
         active: false
       },
-      {
+      4: {
         route: '#',
         displayValue: '4',
+        id: 4,
         active: false
       }
-    ],
+    },
     formInputs: {
       name: {
         elementType: 'input',
@@ -68,6 +73,19 @@ class App extends Component {
     } 
   }
 
+  // componentDidMount() {
+  //   let moreLinks = {...this.state.links};
+  //   for( let i = 5; i<101; i++) {
+  //     moreLinks[i] = {
+  //       route: '#',
+  //       displayValue: `${i}`,
+  //       id: i,
+  //       active: false
+  //     }
+  //   };
+  //   this.setState({links: moreLinks});
+  // }
+
   inputChangeHandler = (event) => {
     const updatedFormInputs = {...this.state.formInputs};
     updatedFormInputs[event.target.id].elementConfig.value = event.target.value
@@ -82,8 +100,56 @@ class App extends Component {
   }
 
   pageChangedHandler = (event) => {
-    console.log(event.target.text);
+    const updatedPagination = {...this.state.links};
+    let currentLinkId = null;
+    const lastElement = Object.keys(updatedPagination);
+    for (let key in updatedPagination) {
+      if (updatedPagination[key].active === true) {
+        currentLinkId = updatedPagination[key].id;
+      };
+    };
+    if (Number(event.target.id) === 0) { 
+      if (currentLinkId > 1) {
+        updatedPagination[currentLinkId].active = false;
+        updatedPagination[currentLinkId-1].active = true;
+      };
+    } 
+    else if (Number(event.target.id) === lastElement.length + 1) {
+      if (currentLinkId < lastElement[lastElement.length - 1]) {
+        updatedPagination[currentLinkId].active = false;
+        updatedPagination[currentLinkId+1].active = true;
+      };
+    }
+    else {
+      updatedPagination[currentLinkId].active = false;
+      updatedPagination[Number(event.target.id)].active = true;
+    };
+    this.setState({links: updatedPagination});
   }
+
+  // pageChangedByArrowHandler = (event) => {
+  //   const updatedPagination = {...this.state.links};
+  //   let currentLinkId = null;
+  //   for (let key in updatedPagination) {
+  //     if (updatedPagination[key].active === true) {
+  //       currentLinkId = updatedPagination[key].id;
+  //     };
+  //   };     
+  //   if (Number(event.target.id) === 0) { 
+  //     if (currentLinkId > 1) {
+  //       updatedPagination[currentLinkId].active = false;
+  //       updatedPagination[currentLinkId-1].active = true;
+  //     };
+  //   } 
+  //   else {
+  //     const lastElement = Object.keys(updatedPagination);
+  //     if (currentLinkId < lastElement[lastElement.length - 1]) {
+  //       updatedPagination[currentLinkId].active = false;
+  //       updatedPagination[currentLinkId+1].active = true;
+  //     };
+  //   };
+  //   this.setState({links: updatedPagination});
+  // }
 
   render() {
     let display =  (
@@ -94,7 +160,7 @@ class App extends Component {
         <br/>
         <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} />
         <br/>
-        <Pagination links={this.state.links} pageChange={this.pageChangedHandler} />        
+        <Pagination links={this.state.links} changePage={this.pageChangedHandler} />        
       </div>
     );
     return display
