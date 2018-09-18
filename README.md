@@ -15,7 +15,7 @@ import 'bootswatch/dist/<theme of your choice>/bootstrap.min.css';
 import 'zh-ui-library/dist/<name of component you want to use>';
 ```
 ## List of UI Components currently available
-### Dynamic Form
+## Dynamic Form
 Takes the following props attributes: 
 1. formInputs: takes an object. 
 2. changed: takes input event handler function to set/update form input values. 
@@ -70,7 +70,7 @@ Finally call the component
 ```
 <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} sort={true} formStyling={{topPadding: '20px'}} submit={this.submitDataHandler.bind(this))}/>
 ```
-### Flash Message
+## Flash Message
 Takes the following props attributes:
 1. message: Displayed Message srting.
 2. messageType: One of these strings 'success', 'warning', 'primary', 'danger', 'info', 'secondary' or 'light'.
@@ -94,11 +94,71 @@ Finally call the component
 ```
 <FlashMessage message={this.state.flashMessage.message} messageType={this.state.flashMessage.messageType} dismiss={this.closeFlashHandler.bind(this)}/>
 ```
-### Pagination
+## Pagination
 Takes the following props attributes:
-1. links: Array of objects
+1. links: Takes an object.
 2. pageChange: takes page change handler function to change the page and query data.
 
 ```
-<Pagination links={this.state.links} pageChange={this.pageChangedHandler} />
+state = {
+	links: {
+    1: { 
+      route: '#',
+      displayValue: '1',
+      id: 1,
+      active: true
+    },
+    2: {
+      route: '#',
+      displayValue: '2',
+      id: 2,
+      active: false
+    },
+    3: {
+      route: '#',
+      displayValue: '3',
+      id: 3,
+      active: false
+    },
+    4: {
+      route: '#',
+      displayValue: '4',
+      id: 4,
+      active: false
+    }
+  }
+};
+
+pageChangedHandler = (event) => {
+  const updatedPagination = {...this.state.links};
+  let currentLinkId = null;
+  const lastElement = Object.keys(updatedPagination);
+  for (let key in updatedPagination) {
+    if (updatedPagination[key].active === true) {
+      currentLinkId = updatedPagination[key].id;
+    };
+  };
+  if (Number(event.target.id) === 0) { 
+    if (currentLinkId > 1) {
+      updatedPagination[currentLinkId].active = false;
+      updatedPagination[currentLinkId-1].active = true;
+    };
+  } 
+  else if (Number(event.target.id) === lastElement.length + 1) {
+    if (currentLinkId < lastElement[lastElement.length - 1]) {
+      updatedPagination[currentLinkId].active = false;
+      updatedPagination[currentLinkId+1].active = true;
+    };
+  }
+  else {
+    updatedPagination[currentLinkId].active = false;
+    updatedPagination[Number(event.target.id)].active = true;
+  };
+  this.setState({links: updatedPagination});
+}
+```
+Finally call the component
+
+```
+<Pagination links={this.state.links} changePage={this.pageChangedHandler} />
 ```

@@ -127,30 +127,6 @@ class App extends Component {
     this.setState({links: updatedPagination});
   }
 
-  // pageChangedByArrowHandler = (event) => {
-  //   const updatedPagination = {...this.state.links};
-  //   let currentLinkId = null;
-  //   for (let key in updatedPagination) {
-  //     if (updatedPagination[key].active === true) {
-  //       currentLinkId = updatedPagination[key].id;
-  //     };
-  //   };     
-  //   if (Number(event.target.id) === 0) { 
-  //     if (currentLinkId > 1) {
-  //       updatedPagination[currentLinkId].active = false;
-  //       updatedPagination[currentLinkId-1].active = true;
-  //     };
-  //   } 
-  //   else {
-  //     const lastElement = Object.keys(updatedPagination);
-  //     if (currentLinkId < lastElement[lastElement.length - 1]) {
-  //       updatedPagination[currentLinkId].active = false;
-  //       updatedPagination[currentLinkId+1].active = true;
-  //     };
-  //   };
-  //   this.setState({links: updatedPagination});
-  // }
-
   render() {
     let display =  (
       <div className="container" style={{paddingTop: '50px'}}>
