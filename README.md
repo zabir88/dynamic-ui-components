@@ -19,17 +19,14 @@ import 'zh-ui-library/dist/<name of component you want to use>';
 Currently the form supports dropdowns, date field, number field, text field, password field, email field, textareas and check-boxes.
 
 ### Props
-| Name          | Type     | Description                                                |
-| ------------- |:--------:| ----------------------------------------------------------:|
-| formInputs    | Object   | Describes the inputs of the form.Please check the example  |
-|               |          | below.                                                     |
-| changed       | function | Takes input event handler function to set/update form input|
-|               |          | values.                                                    |
-| sort          | boolean  | Sorts the form inputs in a given order. Must provide order |
-|               |          | key in the each form input.                                |
-| submit        | function | Takes submit handler function to submit the form.          |
-| formStyling   | Object   | Style the form with paddings, margins, color,              |
-|               |          | backgroudcolors etc.                                       |
+| Name          | Type     | Description                                                                           |
+| ------------- |:--------:| --------------------------------------------------------------------------------------|
+| formInputs    | Object   | Describes the inputs of the form.Please check the example below.                      |
+| changed       | function | Takes input event handler function to set/update form input values.                   |
+| sort          | boolean  | Sorts the form inputs in a given order. Must provide order key in the each form input.|
+| submit        | function | Takes submit handler function to submit the form.                                     |
+| formStyling   | Object   | Style the form with paddings, margins, color,                                         |
+|               |          | backgroudcolors etc.                                                                  |
 
 Use case example: 
 ```
@@ -81,16 +78,10 @@ Finally call the component
 ```
 ## Alert
 ### Props
-| Name          | Type         | 
-| ------------- |:------------:|
-| bsStyle       | one of:      |
-|               | "success",   |
-|               | "warning",   |
-|               | "danger",    |
-|               | "info",      |
-|               | "primary"    |
-| dismiss       | function     |
-|               |              |
+| Name          | Type                                                     | 
+| ------------- |----------------------------------------------------------|
+| bsStyle       | one of: "success", "warning", "danger", "info", "primary"|
+| dismiss       | function                                                 |
 
 Use case example: 
 ```
@@ -116,13 +107,11 @@ render () {
   };
 }
 ```
-##Breadcrumb
+## Breadcrumb
 ### Props
-| Name          | Type         | Description                      | 
-| ------------- |:------------:|---------------------------------:|
-| links         | Object       | Provides the links and display   |
-|               |              | value of each breadcrumb element.|
-|               |              |                                  |
+| Name          | Type         | Description                                                     | 
+| ------------- |:------------:|-----------------------------------------------------------------|
+| links         | Object       | Provides the links and display value of each breadcrumb element.|
 
 Use case example: 
 ```
