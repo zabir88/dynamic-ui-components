@@ -40,6 +40,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "bootswatch": "^4.1.3"
+    "bootswatch": "^4.1.3",
+    "react-bootstrap": "^0.32.4"
   }
 }

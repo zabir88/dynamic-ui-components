@@ -1,42 +1,59 @@
 import React, { Component } from 'react';
 import Form from './lib/Form';
-import FlashMessage from './lib/FlashMessage';
+import Alert from './lib/Alert';
 import Pagination from './lib/Pagination';
+import Breadcrumb from './lib/Breadcrumb';
 
 class App extends Component {
   state = {
-    perPageData: 5,
-    totalData: 10,
-    currentPageData: 5,
-    flashMessage: {
-      message: 'Thank You!',
-      messageType: 'success',  
-    },
-    links: {
-      1: { 
+    breadcrumbLinks: {
+      1: {
         route: '#',
-        displayValue: '1',
-        id: 1,
-        active: true
+        displayValue: 'Home'
       },
       2: {
         route: '#',
-        displayValue: '2',
-        id: 2,
-        active: false
+        displayValue: 'Library'
       },
       3: {
         route: '#',
-        displayValue: '3',
-        id: 3,
-        active: false
-      },
-      4: {
-        route: '#',
-        displayValue: '4',
-        id: 4,
-        active: false
+        displayValue: 'Data'
       }
+    },
+    pagination: {
+      perPageData: 5,
+      totalData: 10,
+      currentPageData: 5,
+      size: 'medium',
+      links: {
+        1: { 
+          route: '#',
+          displayValue: '1',
+          id: 1,
+          active: true
+        },
+        2: {
+          route: '#',
+          displayValue: '2',
+          id: 2,
+          active: false
+        },
+        3: {
+          route: '#',
+          displayValue: '3',
+          id: 3,
+          active: false
+        },
+        4: {
+          route: '#',
+          displayValue: '4',
+          id: 4,
+          active: false
+        }
+      }
+    },
+    alert: {
+      show: true 
     },
     formInputs: {
       name: {
@@ -95,51 +112,59 @@ class App extends Component {
     this.setState({formInputs: updatedFormInputs});
   }
 
-  closeFlashHandler = () => {
-    const updatedFlashMessage = {...this.state.flashMessage};
-    updatedFlashMessage.message = null;
-    updatedFlashMessage.messageType = null;
-    this.setState({flashMessage: updatedFlashMessage});
-  }
-
   pageChangedHandler = (event) => {
-    const updatedPagination = {...this.state.links};
+    const updatedPagination = {...this.state.pagination};
     let currentLinkId = null;
-    const updatedPaginationValueArray = Object.keys(updatedPagination);
-    for (let key in updatedPagination) {
-      if (updatedPagination[key].active === true) {
-        currentLinkId = updatedPagination[key].id;
+
+    const updatedPaginationValueArray = Object.keys(updatedPagination.links);
+    for (let key in updatedPagination.links) {
+      if (updatedPagination.links[key].active === true) {
+        currentLinkId = updatedPagination.links[key].id;
       };
     };
     if (event.target.id === 'back') { 
       if (currentLinkId > 1) {
-        updatedPagination[currentLinkId].active = false;
-        updatedPagination[currentLinkId-1].active = true;
+        updatedPagination.links[currentLinkId].active = false;
+        updatedPagination.links[currentLinkId-1].active = true;
       };
     } 
     else if (event.target.id === 'next') {
       if (currentLinkId < updatedPaginationValueArray[updatedPaginationValueArray.length - 1]) {
-        updatedPagination[currentLinkId].active = false;
-        updatedPagination[currentLinkId+1].active = true;
+        updatedPagination.links[currentLinkId].active = false;
+        updatedPagination.links[currentLinkId+1].active = true;
       };
     }
     else {
-      updatedPagination[currentLinkId].active = false;
-      updatedPagination[Number(event.target.id)].active = true;
+      updatedPagination.links[currentLinkId].active = false;
+      updatedPagination.links[Number(event.target.id)].active = true;
     };
-    this.setState({links: updatedPagination});
+    this.setState({pagination: updatedPagination});
   }
 
+  alertDismissHandler = () => {
+    this.setState({alert: {show: false}})
+  }
+
+
   render() {
+    let alert = null;
+    if (this.state.alert.show) {
+      alert = (
+        <Alert bsStyle={'success'} dismiss={this.alertDismissHandler}>
+          <p>Thank You!</p>
+        </Alert>
+      );  
+    };
     let display =  (
       <div className="container" style={{paddingTop: '50px'}}>
         <h1 className="text-center">Welcome to ZH-UI-Library</h1>
         <br/>
-        <FlashMessage message={this.state.flashMessage.message} messageType={this.state.flashMessage.messageType} dismiss={this.closeFlashHandler.bind(this)} />
+        <Breadcrumb links={this.state.breadcrumbLinks}/>
+        {alert}
         <br/>
         <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} />
         <br/>
-        <Pagination links={this.state.links} pageChange={this.pageChangedHandler} position={'right'}  perPage={this.state.perPageData} currentPage= {this.state.currentPageData} total={this.state.totalData}/>        
+        <Pagination links={this.state.pagination.links} pageChange={this.pageChangedHandler} position={'right'}  perPage={this.state.pagination.perPageData} currentPage= {this.state.pagination.currentPageData} total={this.state.pagination.totalData}/>        
       </div>
     );
     return display

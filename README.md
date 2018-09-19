@@ -1,5 +1,5 @@
 # ZH-UI-Library
-A library of UI components created using `react.js` and `bootstrap`.
+A library of UI components created using `react.js` and `bootstrap 4`.
 
 ## Installation
 Run the following command:
@@ -9,21 +9,27 @@ Run the following command:
 Bootswatch (a variation of the bootstrap framework). For more info please visit [https://bootswatch.com](https://www.bootswatch.com)
 
 ## How to use
-Import these files in the index.js file 
+Import these files in your react app index.js file 
 ```
 import 'bootswatch/dist/<theme of your choice>/bootstrap.min.css';
 import 'zh-ui-library/dist/<name of component you want to use>';
 ```
 ## List of UI Components currently available
 ## Dynamic Form
-Takes the following props attributes: 
-1. formInputs: takes an object. 
-2. changed: takes input event handler function to set/update form input values. 
-3. sort(boolean value accepted): true or false.
-4. formStyling: takes style object.
-5. submit: takes submit handler function to submit the data.
-
 Currently the form supports dropdowns, date field, number field, text field, password field, email field, textareas and check-boxes.
+
+### Props
+| Name          | Type     | Description                                                |
+| ------------- |:--------:| ----------------------------------------------------------:|
+| formInputs    | Object   | Describes the inputs of the form.Please check the example  |
+|               |          | below.                                                     |
+| changed       | function | Takes input event handler function to set/update form input|
+|               |          | values.                                                    |
+| sort          | boolean  | Sorts the form inputs in a given order. Must provide order |
+|               |          | key in the each form input.                                |
+| submit        | function | Takes submit handler function to submit the form.          |
+| formStyling   | Object   | Style the form with paddings, margins, color,              |
+|               |          | backgroudcolors etc.                                       |
 
 Use case example: 
 ```
@@ -31,7 +37,8 @@ this.state = {
 	formInputs: {
 		name: {
 			elementType: 'input',
-			elementConfig: {
+			order: 1,
+      elementConfig: {
 			  type: 'text',
 			  value: '',
 			  placeholder: 'Name',
@@ -42,6 +49,7 @@ this.state = {
 		usCitizenship: {
 		  elementType: 'select',
 		  label: 'US Citizenship',
+      order: 2,
 		  elementConfig: {
 		    value: 'Please select one',
 		    id: 'usCitizenship',
@@ -56,6 +64,7 @@ this.state = {
 		description: {
 		  elementType:'textarea',
 		  label: 'Description',
+      order: 3,
 		  elementConfig: {
 		    value: '',
 		    id:'description',
@@ -70,29 +79,74 @@ Finally call the component
 ```
 <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} sort={true} formStyling={{topPadding: '20px'}} submit={this.submitDataHandler.bind(this))}/>
 ```
-## Flash Message
-Takes the following props attributes:
-1. message: Displayed Message srting.
-2. messageType: One of these strings 'success', 'warning', 'primary', 'danger', 'info', 'secondary' or 'light'.
-3. dismiss: takes dismiss handler to set message and messageType to null in the state of the parent component.
+## Alert
+### Props
+| Name          | Type         | 
+| ------------- |:------------:|
+| bsStyle       | one of:      |
+|               | "success",   |
+|               | "warning",   |
+|               | "danger",    |
+|               | "info",      |
+|               | "primary"    |
+| dismiss       | function     |
+|               |              |
 
 Use case example: 
 ```
 state = {
-	flashMessage: {
-		message: 'Thank You!',
-		messageType: 'success'
-	}
+  alert: {
+    show: true
+  }
 };
 
-closeFlashHandler = () => {
-	this.setState(flashMessage: {message: null, messageType: null});
+alertDismissHandler = () => {
+	this.setState({alert: {show: false}})
 }
 ```
-
 Finally call the component
 ```
-<FlashMessage message={this.state.flashMessage.message} messageType={this.state.flashMessage.messageType} dismiss={this.closeFlashHandler.bind(this)}/>
+render () {
+  if (this.state.alert.show) {  
+    return (
+      <Alert bsStyle={'success'} dismiss={this.alertDismissHandler}>
+        <p>Thank You!</p>
+      </Alert>
+    )
+  };
+}
+```
+##Breadcrumb
+### Props
+| Name          | Type         | Description                      | 
+| ------------- |:------------:|---------------------------------:|
+| links         | Object       | Provides the links and display   |
+|               |              | value of each breadcrumb element.|
+|               |              |                                  |
+
+Use case example: 
+```
+state = {
+  breadcrumbLinks: {
+    1: {
+      route: '#',
+      displayValue: 'Home'
+    },
+    2: {
+      route: '#',
+      displayValue: 'Library'
+    },
+    3: {
+      route: '#',
+      displayValue: 'Data'
+    }
+  }
+}
+```
+Call the component
+
+```
+<Breadcrumb links={this.state.breadcrumbLinks}/>
 ```
 ## Pagination
 Takes the following props attributes:
