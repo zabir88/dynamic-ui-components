@@ -98,9 +98,17 @@ Finally call the component
 Takes the following props attributes:
 1. links: Takes an object.
 2. pageChange: takes page change handler function to change the page and query data.
+3. position: takes 'left' or 'right' string.
+4. perPage: takes integer value to display count at the bottom.
+5. currentPage: takes integer value to display count at the bottom.
+6. total: takes integer value to display total count at the bottom.
 
+Use case example:
 ```
 state = {
+  perPageData: 5,
+  totalData: 10,
+  currentPageData: 5,
 	links: {
     1: { 
       route: '#',
@@ -132,20 +140,20 @@ state = {
 pageChangedHandler = (event) => {
   const updatedPagination = {...this.state.links};
   let currentLinkId = null;
-  const lastElement = Object.keys(updatedPagination);
+  const updatedPaginationValueArray = Object.keys(updatedPagination);
   for (let key in updatedPagination) {
     if (updatedPagination[key].active === true) {
       currentLinkId = updatedPagination[key].id;
     };
   };
-  if (Number(event.target.id) === 0) { 
+  if (event.target.id === 'back') { 
     if (currentLinkId > 1) {
       updatedPagination[currentLinkId].active = false;
       updatedPagination[currentLinkId-1].active = true;
     };
   } 
-  else if (Number(event.target.id) === lastElement.length + 1) {
-    if (currentLinkId < lastElement[lastElement.length - 1]) {
+  else if (event.target.id === 'next') {
+    if (currentLinkId < updatedPaginationValueArray[updatedPaginationValueArray.length - 1]) {
       updatedPagination[currentLinkId].active = false;
       updatedPagination[currentLinkId+1].active = true;
     };
@@ -160,5 +168,5 @@ pageChangedHandler = (event) => {
 Finally call the component
 
 ```
-<Pagination links={this.state.links} changePage={this.pageChangedHandler} />
+<Pagination links={this.state.links} pageChange={this.pageChangedHandler} position={'right'}  perPage={this.state.perPageData} currentPage= {this.state.currentPageData} total={this.state.totalData}/>
 ```

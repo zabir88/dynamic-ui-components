@@ -9,7 +9,13 @@
   "license": "MIT",
   "homepage": "https://github.com/zabir88/zh-ui-library#readme",
   "description": "Component based UI Library created using react.js and bootstrap",
-  "keywords": ["ui", "library", "bootstrap", "component", "react"],
+  "keywords": [
+    "ui",
+    "library",
+    "bootstrap",
+    "component",
+    "react"
+  ],
   "bugs": "zabir8809@gmail.com",
   "main": "dist/index.js",
   "module": "dist/index.js",
