@@ -25,8 +25,7 @@ Currently the form supports dropdowns, date field, number field, text field, pas
 | changed       | function | Takes input event handler function to set/update form input values.                   |
 | sort          | boolean  | Sorts the form inputs in a given order. Must provide order key in the each form input.|
 | submit        | function | Takes submit handler function to submit the form.                                     |
-| formStyling   | Object   | Style the form with paddings, margins, color,                                         |
-|               |          | backgroudcolors etc.                                                                  |
+| formStyling   | Object   | Style the form with paddings, margins, color, backgroudcolors etc.                    |
 
 Use case example: 
 ```
