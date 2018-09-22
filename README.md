@@ -73,12 +73,18 @@ this.state = {
 ```
 Finally call the component
 ```
-<Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} sort={true} formStyling={{topPadding: '20px'}} submit={this.submitDataHandler.bind(this))}/>
+<Form 
+  formInputs={this.state.formInputs} 
+  changed={this.inputChangeHandler.bind(this)} 
+  sort={true} 
+  formStyling={{topPadding: '20px'}} 
+  submit={this.submitDataHandler.bind(this))}
+/>
 ```
 ## Alert
 ### Props
 | Name          | Type                                                     | 
-| ------------- |----------------------------------------------------------|
+| --------------|----------------------------------------------------------|
 | bsStyle       | one of: "success", "warning", "danger", "info", "primary"|
 | dismiss       | function                                                 |
 
@@ -117,15 +123,15 @@ Use case example:
 state = {
   breadcrumbLinks: {
     1: {
-      route: '#',
+      route: 'route of your choice',
       displayValue: 'Home'
     },
     2: {
-      route: '#',
+      route: 'route of your choice',
       displayValue: 'Library'
     },
     3: {
-      route: '#',
+      route: 'route of your choice',
       displayValue: 'Data'
     }
   }
@@ -137,78 +143,75 @@ Call the component
 <Breadcrumb links={this.state.breadcrumbLinks}/>
 ```
 ## Pagination
-Takes the following props attributes:
-1. links: Takes an object.
-2. pageChange: takes page change handler function to change the page and query data.
-3. position: takes 'left' or 'right' string.
-4. perPage: takes integer value to display count at the bottom.
-5. currentPage: takes integer value to display count at the bottom.
-6. total: takes integer value to display total count at the bottom.
+### Props
+| Name          | Type     | Description                                                         |
+| ------------- |:--------:| --------------------------------------------------------------------|
+| links         | Object   | Describes the pagination links.Please check the example below.      |
+| pageChange    | function | Takes page change event handler function to change page.            |
+| perPage       | Number   | takes integer value to display count per page.                      |
+| currentPage   | Number   | Current page.                                                       |
+| total         | Number   | takes total value to display total count.                           |
 
 Use case example:
 ```
 state = {
-  perPageData: 5,
-  totalData: 10,
-  currentPageData: 5,
-	links: {
-    1: { 
-      route: '#',
-      displayValue: '1',
-      id: 1,
-      active: true
-    },
-    2: {
-      route: '#',
-      displayValue: '2',
-      id: 2,
-      active: false
-    },
-    3: {
-      route: '#',
-      displayValue: '3',
-      id: 3,
-      active: false
-    },
-    4: {
-      route: '#',
-      displayValue: '4',
-      id: 4,
-      active: false
+  pagination: {
+    perPage: 5,
+    total: 10,
+    currentPage: 1,
+    links: {
+      1: { 
+        id: 1,
+        active: true
+      },
+      2: {
+        id: 2,
+        active: false
+      },
+      3: {
+        id: 3,
+        active: false
+      },
+      4: {
+        id: 4,
+        active: false
+      }
     }
   }
 };
 
 pageChangedHandler = (event) => {
-  const updatedPagination = {...this.state.links};
-  let currentLinkId = null;
-  const updatedPaginationValueArray = Object.keys(updatedPagination);
-  for (let key in updatedPagination) {
-    if (updatedPagination[key].active === true) {
-      currentLinkId = updatedPagination[key].id;
-    };
-  };
+  const updatedPagination = {...this.state.pagination};
+  const updatedPaginationValueArray = Object.keys(updatedPagination.links);
+  let currentLinkId = this.state.pagination.currentPage;
+  let nextPage = null;
   if (event.target.id === 'back') { 
     if (currentLinkId > 1) {
-      updatedPagination[currentLinkId].active = false;
-      updatedPagination[currentLinkId-1].active = true;
+      nextPage = currentLinkId-1;
     };
   } 
   else if (event.target.id === 'next') {
     if (currentLinkId < updatedPaginationValueArray[updatedPaginationValueArray.length - 1]) {
-      updatedPagination[currentLinkId].active = false;
-      updatedPagination[currentLinkId+1].active = true;
+      nextPage = currentLinkId+1;
     };
   }
   else {
-    updatedPagination[currentLinkId].active = false;
-    updatedPagination[Number(event.target.id)].active = true;
+    nextPage = Number(event.target.id);
   };
-  this.setState({links: updatedPagination});
+  updatedPagination.links[currentLinkId].active = false;
+  updatedPagination.links[nextPage].active = true;
+  updatedPagination.currentPage  = nextPage;
+  this.setState({pagination: updatedPagination});
 }
 ```
 Finally call the component
-
 ```
-<Pagination links={this.state.links} pageChange={this.pageChangedHandler} position={'right'}  perPage={this.state.perPageData} currentPage= {this.state.currentPageData} total={this.state.totalData}/>
+<Pagination 
+  links={this.state.pagination.links} 
+  pageChange={this.pageChangedHandler}   
+  perPage={this.state.pagination.perPage} 
+  currentPage= {this.state.pagination.currentPage} 
+  total={this.state.pagination.total}
+  position={'right'}
+/>
 ```
