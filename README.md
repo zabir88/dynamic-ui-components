@@ -6,12 +6,14 @@ Run the following command:
 `npm install zh-ui-library --save`
 
 ## Dependecies 
-Bootswatch (a variation of the bootstrap framework). For more info please visit [https://bootswatch.com](https://www.bootswatch.com)
+* Bootswatch (a variation of the bootstrap framework). For more info please visit [https://bootswatch.com](https://www.bootswatch.com)
+* Font Awesome
 
 ## How to use
 Import these files in your react app index.js file 
 ```
 import 'bootswatch/dist/<theme of your choice>/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 import 'zh-ui-library/dist/<name of component you want to use>';
 ```
 ## List of UI Components currently available
@@ -214,4 +216,10 @@ Finally call the component
   total={this.state.pagination.total}
   position={'right'}
 />
+```
+
+## Spinner
+Call the component
+```
+<Spinner />
 ```

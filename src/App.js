@@ -3,6 +3,7 @@ import Form from './lib/Form';
 import Alert from './lib/Alert';
 import Pagination from './lib/Pagination';
 import Breadcrumb from './lib/Breadcrumb';
+import Spinner from './lib/Spinner';
 
 class App extends Component {
   state = {
@@ -143,7 +144,9 @@ class App extends Component {
           perPage={this.state.pagination.perPage} 
           currentPage= {this.state.pagination.currentPage} 
           total={this.state.pagination.total}
-        />    
+        /> 
+        <br/>
+        <Spinner/>   
       </div>
     );
     return display
