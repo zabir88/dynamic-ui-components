@@ -42,7 +42,6 @@ var pagination = function pagination(props) {
 	for (var key in props.links) {
 		paginationLinks.push(props.links[key]);
 	};
-	console.log(paginationLinks);
 	var paginationEl = paginationLinks.map(function (i, j) {
 		return React.createElement(
 			'li',

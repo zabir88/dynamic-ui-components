@@ -146,7 +146,7 @@ class App extends Component {
           total={this.state.pagination.total}
         /> 
         <br/>
-        <Spinner/>   
+        <Spinner size={3}/>   
       </div>
     );
     return display

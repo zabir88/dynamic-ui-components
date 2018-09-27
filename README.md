@@ -219,7 +219,16 @@ Finally call the component
 ```
 
 ## Spinner
+### Props
+| Name          | Type     | Description                                           |
+| ------------- |:--------:| ------------------------------------------------------|
+| size          | Number   | Dictates the size of the spinner. Number from 1 to 5. |
+
 Call the component
 ```
 <Spinner />
 ```
+
+## License
+ZH-UI-Library is licensed under the terms of the MIT license.
+
