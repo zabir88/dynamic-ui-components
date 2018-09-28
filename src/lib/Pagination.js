@@ -2,9 +2,9 @@ import React from 'react';
 import Aux from './Aux';
 
 const pagination = (props) => {
-	let displayCounts = null;
+	let displayCounts;
 	if(props.perPage === null || props.perPage === undefined || props.total === null || props.total === undefined || props.currentPage === null || props.currentPage === undefined) {
-		displayCounts;
+		displayCounts = null;
 	}
 	else {
 		if(props.perPage > props.total) {
@@ -26,7 +26,6 @@ const pagination = (props) => {
 	for (let key in props.links) {
 		paginationLinks.push(props.links[key]);
 	};
-	console.log(paginationLinks);
 	let paginationEl = paginationLinks.map((i, j) => {
 		return (
 			<li className={i.active ? "page-item active" : "page-item"} key={j}>
@@ -35,9 +34,9 @@ const pagination = (props) => {
 		)
 	});
 	
-	let pagination = null;
+	let pagination;
   if (props.perPage > props.total) {
-    pagination;
+    pagination = null;
   }
   else {
   	pagination = (

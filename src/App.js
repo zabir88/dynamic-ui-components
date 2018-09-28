@@ -4,9 +4,24 @@ import Alert from './lib/Alert';
 import Pagination from './lib/Pagination';
 import Breadcrumb from './lib/Breadcrumb';
 import Spinner from './lib/Spinner';
+import SortedTable from './lib/SortedTable';
 
 class App extends Component {
   state = {
+    data: {
+      number: {
+        displayHead: '#',
+        displayBody: ['1', '2', '3', '4']
+      }, 
+      firstName: {
+        displayHead: 'First Name',
+        displayBody: ['zabir', 'sayeeda', 'jesmina', 'abul']
+      }, 
+      lastName: {
+        displayHead: 'Last Name',
+        displayBody: ['hossain', 'manzoor', 'islam', 'hossain']
+      }
+    },
     breadcrumbLinks: {
       1: {
         route: '#',
@@ -146,7 +161,11 @@ class App extends Component {
           total={this.state.pagination.total}
         /> 
         <br/>
-        <Spinner size={3}/>   
+        
+        <Spinner size={4} />
+        
+        <br/>
+        <SortedTable data={this.state.data} headColor={'primary'}/>   
       </div>
     );
     return display
