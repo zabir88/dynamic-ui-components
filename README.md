@@ -1,20 +1,20 @@
-# ZH-UI-Library
-A library of UI components created using `react.js` and `bootstrap 4`.
+# Dynamic-UI-Components
+A library of Dynamic UI components created using `react.js` and `bootstrap 4`.
 
 ## Installation
 Run the following command:
-`npm install zh-ui-library --save`
+`npm install dynamic-ui-components --save`
 
 ## Dependecies 
 * Bootswatch (a variation of the bootstrap framework). For more info please visit [https://bootswatch.com](https://www.bootswatch.com)
 * Font Awesome
 
 ## How to use
-Import these files in your react app index.js file 
+Import these files in your react app top level file(typically index.js) file 
 ```
 import 'bootswatch/dist/<theme of your choice>/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-import 'zh-ui-library/dist/<name of component you want to use>';
+import 'dynamic-ui-components/dist/<name of component you want to use>';
 ```
 ## List of UI Components currently available
 ## Dynamic Form
@@ -230,5 +230,5 @@ Call the component
 ```
 
 ## License
-ZH-UI-Library is licensed under the terms of the MIT license.
+Dynamic-UI-Components is licensed under the terms of the MIT license.
 

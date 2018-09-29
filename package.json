@@ -1,5 +1,5 @@
 {
-  "name": "zh-ui-library",
+  "name": "dynamic-ui-components",
   "version": "1.0.0",
   "author": "Zabir Hossain",
   "person": {
@@ -7,7 +7,7 @@
     "email": "zabir8809@gmail.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/zabir88/zh-ui-library#readme",
+  "homepage": "https://github.com/zabir88/dynamic-ui-components#readme",
   "description": "Component based UI Library created using react.js and bootstrap",
   "keywords": [
     "ui",

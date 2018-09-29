@@ -145,7 +145,7 @@ class App extends Component {
     };
     let display =  (
       <div className="container" style={{paddingTop: '50px'}}>
-        <h1 className="text-center">Welcome to ZH-UI-Library</h1>
+        <h1 className="text-center">Welcome to Dynamic-UI-Components</h1>
         <br/>
         <Breadcrumb links={this.state.breadcrumbLinks}/>
         {alert}
