@@ -226,7 +226,7 @@ Finally call the component
 
 Call the component
 ```
-<Spinner />
+<Spinner size={<any integer from 1 to 5>}/>
 ```
 
 ## License

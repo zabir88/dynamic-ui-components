@@ -8,13 +8,14 @@
   },
   "license": "MIT",
   "homepage": "https://github.com/zabir88/dynamic-ui-components#readme",
-  "description": "Component based UI Library created using react.js and bootstrap",
+  "description": "Component based UI Library created using react.js and bootstrap 4",
   "keywords": [
-    "ui",
-    "library",
-    "bootstrap",
+    "dynamic-ui-components",
+    "dynamic",
+    "bootstrap 4",
     "component",
-    "react"
+    "reactjs",
+    "ui"
   ],
   "bugs": "zabir8809@gmail.com",
   "main": "dist/index.js",
