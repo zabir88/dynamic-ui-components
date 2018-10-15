@@ -99,7 +99,7 @@ state = {
 };
 
 alertDismissHandler = () => {
-	this.setState({alert: {show: false}})
+  this.setState({alert: {show: false}})
 }
 ```
 Finally call the component
