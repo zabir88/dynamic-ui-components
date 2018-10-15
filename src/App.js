@@ -19,7 +19,7 @@ class App extends Component {
       }, 
       lastName: {
         displayHead: 'Last Name',
-        displayBody: ['hossain', 'manzoor', 'islam', 'hossain']
+        displayBody: ['hossain', 'manzoor', 'hossain', 'hossain']
       }
     },
     breadcrumbLinks: {

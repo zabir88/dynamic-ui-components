@@ -32,45 +32,45 @@ Currently the form supports dropdowns, date field, number field, text field, pas
 Use case example: 
 ```
 this.state = {
-	formInputs: {
-		name: {
-			elementType: 'input',
-			order: 1,
+  formInputs: {
+    name: {
+      elementType: 'input',
+      order: 1,
       elementConfig: {
-			  type: 'text',
-			  value: '',
-			  placeholder: 'Name',
-			  id: 'name',
-			  className: 'form-control'
-			}
-		},
-		usCitizenship: {
-		  elementType: 'select',
-		  label: 'US Citizenship',
+        type: 'text',
+        value: '',
+        placeholder: 'Name',
+        id: 'name',
+        className: 'form-control'
+      }
+    },
+    usCitizenship: {
+      elementType: 'select',
+      label: 'US Citizenship',
       order: 2,
-		  elementConfig: {
-		    value: 'Please select one',
-		    id: 'usCitizenship',
-		    className: 'form-control' 
-		  },
-		  options: [
-		    {value: 'Please select one', displayValue: 'Please select one', disabled: true},
-		    {value: 'Yes', displayValue: 'Yes', disabled: false},
-		    {value: 'No', displayValue: 'No', disabled: false}
-		  ]
-		},
-		description: {
-		  elementType:'textarea',
-		  label: 'Description',
+      elementConfig: {
+        value: 'Please select one',
+        id: 'usCitizenship',
+        className: 'form-control' 
+      },
+      options: [
+        {value: 'Please select one', displayValue: 'Please select one', disabled: true},
+        {value: 'Yes', displayValue: 'Yes', disabled: false},
+        {value: 'No', displayValue: 'No', disabled: false}
+      ]
+    },
+  	description: {
+      elementType:'textarea',
+      label: 'Description',
       order: 3,
-		  elementConfig: {
-		    value: '',
-		    id:'description',
-		    placeholder: 'Please enter description...',
-		    className: 'form-control'
-		  }
-		}
-	};
+      elementConfig: {
+        value: '',
+        id:'description',
+        placeholder: 'Please enter description...',
+        className: 'form-control'
+      }
+    }
+  };
 };
 ```
 Finally call the component
