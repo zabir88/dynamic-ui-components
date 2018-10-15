@@ -30,6 +30,7 @@ Currently the form supports dropdowns, date field, number field, text field, pas
 | formStyling   | Object   | Style the form with paddings, margins, color, backgroudcolors etc.                    |
 
 Use case example: 
+
 Create this.state.formInputs in the structure shown below in your constructor() or componentDidMount() method.
 ```
 this.state = {
