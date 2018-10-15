@@ -59,7 +59,7 @@ this.state = {
         {value: 'No', displayValue: 'No', disabled: false}
       ]
     },
-  	description: {
+    description: {
       elementType:'textarea',
       label: 'Description',
       order: 3,
