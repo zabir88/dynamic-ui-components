@@ -18,7 +18,15 @@ import 'dynamic-ui-components/dist/<name of component you want to use>';
 ```
 ## List of UI Components currently available
 ## Dynamic Form
-Currently the form supports dropdowns, date field, number field, text field, password field, email field, textareas and check-boxes.
+Currently the form supports the following: 
+1. dropdowns
+2. date field
+3. number field
+4. text field
+5. password field
+6. email field 
+7. textareas
+8. check-boxes
 
 ### Props
 | Name          | Type     | Description                                                                           |
