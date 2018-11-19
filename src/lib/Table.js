@@ -1,18 +1,21 @@
 import React from 'react';
 
-const sortedTable = (props) => {
+const table = (props) => {
 	let display;
 	if(props.data === undefined || props.data === null){
 		display = null;
 	}
 	else {
-		const head = [];
-		const body = [];		
-		const lengthOfLoop =  Object.entries(props.data)[0][1].displayBody.length;
+		// head elements
+		const head = [];		
 		for (let i in props.data) {
 			head.push(props.data[i].displayHead);
 		};
 		const headEl = head.map((i, k1) => <th key={k1}>{i}</th>)
+		
+		//body elements
+		const body = [];		
+		const lengthOfLoop =  Object.entries(props.data)[0][1].displayBody.length;
 		for (let j = 0; j < lengthOfLoop; j++) {
 	    let row = [];    
 	    for (let i in props.data) {
@@ -27,9 +30,10 @@ const sortedTable = (props) => {
 				</tr>
 			))
 		);
+		
 		display = (	
 			<div className='table-responsive'>
-				<table className="table table-hover">
+				<table className={props.border === undefined || props.border === false ? 'table table-hover' : 'table table-hover table-bordered' }>
 				  <thead className={props.headColor === undefined || props.headColor === null ? `thead-light` : `thead-${props.headColor}`}>
 				    <tr>
 				    	{headEl}
@@ -45,4 +49,4 @@ const sortedTable = (props) => {
 	return display
 }
 
-export default sortedTable;
+export default table;

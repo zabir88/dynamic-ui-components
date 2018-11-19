@@ -224,13 +224,45 @@ Finally call the component
 ### Props
 | Name          | Type     | Description                                           |
 | ------------- |:--------:| ------------------------------------------------------|
-| size          | Number   | Dictates the size of the spinner. Number from 1 to 5. |
+| size          | Object   | Dictates the size of the spinner. Number from 1 to 5. |
 
 Call the component
 ```
 <Spinner size={<any integer from 1 to 5>}/>
 ```
 
+## Table
+### Props
+| Name          | Type     | Description                                                    |
+| ------------- |:--------:| ---------------------------------------------------------------|
+| data          | Number   | Describes the data presented. Please follow the example below. |
+| border        | Boolean  | Adds border to the table if true. Default is false.            |
+| headColor     | String   | Takes 'light' or 'dark' as string values. Default 'light'      |
+
+Use case example:
+Props data must be in the format shown below:
+```
+state = {
+  tableData: {
+    number: {
+      displayHead: '#',
+      displayBody: ['1', '2', '3', '4']
+    }, 
+    firstName: {
+      displayHead: 'First Name',
+      displayBody: ['Jon', 'Danery', 'Tyrion', 'Bran']
+    }, 
+    lastName: {
+      displayHead: 'Last Name',
+      displayBody: ['Snow', 'Targaryean', 'Lannister', 'Stark']
+    }
+  }
+}
+```
+Call the component
+```
+<Table data={this.state.tableData} border={true} headColor={'dark'}/>
+```
 ## License
 Dynamic-UI-Components is licensed under the terms of the MIT license.
 
