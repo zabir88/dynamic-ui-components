@@ -83,7 +83,7 @@ this.state = {
   };
 };
 ```
-Finally call the component
+Call the component
 ```
 <Form 
   formInputs={this.state.formInputs} 
@@ -112,7 +112,7 @@ alertDismissHandler = () => {
   this.setState({alert: {show: false}})
 }
 ```
-Finally call the component
+Call the component
 ```
 render () {
   if (this.state.alert.show) {  
@@ -216,7 +216,7 @@ pageChangedHandler = (event) => {
   this.setState({pagination: updatedPagination});
 }
 ```
-Finally call the component
+Call the component
 ```
 <Pagination 
   links={this.state.pagination.links} 
@@ -248,6 +248,7 @@ Call the component
 | headColor     | String   | Takes 'light' or 'dark' as string values. Default 'light'      |
 
 Use case example:
+
 Props data must be in the format shown below:
 ```
 state = {
