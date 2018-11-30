@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Form from './lib/Form';
-import Alert from './lib/Alert';
+import Flash from './lib/Flash';
 import Pagination from './lib/Pagination';
 import Breadcrumb from './lib/Breadcrumb';
 import Spinner from './lib/Spinner';
@@ -138,9 +138,9 @@ class App extends Component {
     let alert = null;
     if (this.state.alert.show) {
       alert = (
-        <Alert bsStyle={'success'} dismiss={this.alertDismissHandler}>
+        <Flash bsStyle={'success'} dismiss={this.alertDismissHandler}>
           <p>Thank You!</p>
-        </Alert>
+        </Flash>
       );  
     };
     let display =  (
@@ -156,6 +156,12 @@ class App extends Component {
         <h3>Form</h3>
         <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} />
         <br/>
+        <h3>Spinner</h3>
+        <Spinner size={4} />
+        <br/>
+        <h3>Table</h3>
+        <Table data={this.state.tableData} border={false} headColor={'dark'}/> 
+        <br/>
         <h3>Pagination</h3>
         <Pagination 
           links={this.state.pagination.links} 
@@ -165,13 +171,6 @@ class App extends Component {
           currentPage= {this.state.pagination.currentPage} 
           total={this.state.pagination.total}
         /> 
-        <br/>
-        <br/>
-        <h3>Spinner</h3>
-        <Spinner size={4} />
-        <br/>
-        <h3>Table</h3>
-        <Table data={this.state.tableData} border={false} headColor={'dark'}/> 
         <br/>  
       </div>
     );
