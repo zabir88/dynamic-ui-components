@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Form from './lib/Form';
-import Flash from './lib/Flash';
+import Alert from './lib/Alert';
 import Pagination from './lib/Pagination';
 import Breadcrumb from './lib/Breadcrumb';
 import Spinner from './lib/Spinner';
@@ -138,9 +138,9 @@ class App extends Component {
     let alert = null;
     if (this.state.alert.show) {
       alert = (
-        <Flash bsStyle={'success'} dismiss={this.alertDismissHandler}>
+        <Alert bsStyle={'success'} dismiss={this.alertDismissHandler}>
           <p>Thank You!</p>
-        </Flash>
+        </Alert>
       );  
     };
     let display =  (

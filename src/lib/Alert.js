@@ -1,6 +1,6 @@
 import React from 'react';
 
-const flash = (props) => {
+const alert = (props) => {
 	let type = null;
 	if (props.bsStyle === null  || props.bsStyle === undefined || props.bsStyle === '') {
 		type = 'alert alert-primary'
@@ -15,4 +15,4 @@ const flash = (props) => {
 		</div>
 	)
 }
-export default flash;
+export default alert;
