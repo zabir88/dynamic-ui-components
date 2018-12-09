@@ -9,18 +9,14 @@ import Table from './lib/Table';
 class App extends Component {
   state = {
     tableData: {
-      number: {
-        displayHead: '#',
-        displayBody: ['1', '2', '3', '4']
-      }, 
-      firstName: {
-        displayHead: 'First Name',
-        displayBody: ['jon', 'danery', 'tyrion', 'bran']
-      }, 
-      lastName: {
-        displayHead: 'Last Name',
-        displayBody: ['snow', 'targaryean', 'lannister', 'stark']
-      }
+      head: ['First Name', 'Last Name'],
+      body: [
+        ['jon', 'snow'],
+        ['bran','stark'],
+        ['danery', 'targaryean'],
+        ['tyrion', 'lannister'],
+      ],
+      routes: []
     },
     breadcrumbLinks: {
       1: {
@@ -65,6 +61,7 @@ class App extends Component {
     formInputs: {
       name: {
         elementType: 'input',
+        label: null,
         elementConfig: {
           type: 'text',
           value: '',
@@ -73,12 +70,27 @@ class App extends Component {
           className: 'form-control'
         }
       },
-      usCitizenship: {
+      checkboxes: {
+        elementType: 'input',
+        label: 'Checkboxes',
+        elementConfig: {
+          type: 'checkbox',
+          className: 'form-check-input',
+          id: 'checkboxes',
+          value: {}
+        },
+        options: [
+          {value: 'option one', displayValue: 'Option One', defaultChecked: false},
+          {value: 'option two', displayValue: 'Option Two', defaultChecked: false},
+          {value: 'option three', displayValue: 'Option Three', defaultChecked: false}
+        ]
+      },
+      dropdown: {
         elementType: 'select',
-        label: 'US Citizenship',
+        label: 'Dropdown',
         elementConfig: {
           value: 'Please select one',
-          id: 'usCitizenship',
+          id: 'dropdown',
           className: 'form-control' 
         },
         options: [
@@ -100,13 +112,38 @@ class App extends Component {
     } 
   }
 
-  inputChangeHandler = (event) => {
+  inputChangedHandler = (event) => {
     const updatedFormInputs = {...this.state.formInputs};
-    updatedFormInputs[event.target.id].elementConfig.value = event.target.value
+    if(event.target.type === 'checkbox') {
+      if(event.target.checked === true) {
+        updatedFormInputs[event.target.parentNode.id].elementConfig.value[event.target.id] = event.target.value;  
+      } else {
+        delete updatedFormInputs[event.target.parentNode.id].elementConfig.value[event.target.id]
+      };
+    } else {
+      updatedFormInputs[event.target.id].elementConfig.value = event.target.value
+    };
     this.setState({formInputs: updatedFormInputs});
   }
 
-  pageChangedHandler = (event) => {
+  selectAllHandler = (event) => {
+    let all = document.getElementsByClassName("check-input");
+    for(let i = 0; i < all.length; i++) {
+      if(event.target.checked) {
+        all[i].checked = true;
+      };
+      if(!event.target.checked) {
+        all[i].checked = false;
+      };
+    };
+  }
+
+  goToHandler = (event) => {
+    // navigate to a different url;
+    window.location = 'https://google.com';
+  }
+
+  pageChangeHandler = (event) => {
     const updatedPagination = {...this.state.pagination};
     const updatedPaginationValueArray = Object.keys(updatedPagination.links);
     let currentLinkId = this.state.pagination.currentPage;
@@ -124,10 +161,12 @@ class App extends Component {
     else {
       nextPage = Number(event.target.id);
     };
-    updatedPagination.links[currentLinkId].active = false;
-    updatedPagination.links[nextPage].active = true;
-    updatedPagination.currentPage  = nextPage;
-    this.setState({pagination: updatedPagination});
+    // make the api call {
+      updatedPagination.links[currentLinkId].active = false;
+      updatedPagination.links[nextPage].active = true;
+      updatedPagination.currentPage  = nextPage;
+      this.setState({pagination: updatedPagination});
+    //}
   }
 
   alertDismissHandler = () => {
@@ -138,38 +177,46 @@ class App extends Component {
     let alert = null;
     if (this.state.alert.show) {
       alert = (
-        <Alert bsStyle={'success'} dismiss={this.alertDismissHandler}>
+        <Alert bsStyle = {'success'} dismiss = {this.alertDismissHandler}>
           <p>Thank You!</p>
         </Alert>
       );  
     };
     let display =  (
-      <div className="container" style={{paddingTop: '50px'}}>
+      <div className = "container" style = {{paddingTop: '50px'}}>
         <h1>Dynamic-UI-Components</h1>
         <br/>
         <h3>Breadcrumb</h3>
-        <Breadcrumb links={this.state.breadcrumbLinks}/>
+        <Breadcrumb links = {this.state.breadcrumbLinks}/>
         <br/>
         <h3>Flash Message</h3>
         {alert}
         <br/>
         <h3>Form</h3>
-        <Form formInputs={this.state.formInputs} changed={this.inputChangeHandler.bind(this)} />
+        <Form formInputs = {this.state.formInputs} changed = {this.inputChangedHandler.bind(this)} />
         <br/>
         <h3>Spinner</h3>
-        <Spinner size={4} />
+        <Spinner type = {'spinner'} size = {4} />
         <br/>
         <h3>Table</h3>
-        <Table data={this.state.tableData} border={false} headColor={'dark'}/> 
+        <Table 
+          data = {this.state.tableData} 
+          clickable = {true} 
+          checkbox = {true} 
+          border = {false} 
+          headColor = {'dark'}
+          selectAll = {this.selectAllHandler.bind(this)}
+          goTo = {this.goToHandler.bind(this)}
+         /> 
         <br/>
         <h3>Pagination</h3>
         <Pagination 
-          links={this.state.pagination.links} 
-          pageChange={this.pageChangedHandler} 
-          position={'right'}  
-          perPage={this.state.pagination.perPage} 
-          currentPage= {this.state.pagination.currentPage} 
-          total={this.state.pagination.total}
+          links = {this.state.pagination.links} 
+          pageChange = {this.pageChangeHandler} 
+          position = {'right'}  
+          perPage = {this.state.pagination.perPage} 
+          currentPage = {this.state.pagination.currentPage} 
+          total = {this.state.pagination.total}
         /> 
         <br/>  
       </div>

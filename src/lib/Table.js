@@ -2,34 +2,32 @@ import React from 'react';
 
 const table = (props) => {
 	let display;
-	if(props.data === undefined || props.data === null){
+	if(props.data === undefined || props.data === null) {
 		display = null;
 	}
 	else {
 		// head elements
-		const head = [];		
-		for (let i in props.data) {
-			head.push(props.data[i].displayHead);
+		let headEl = [];
+		if(props.checkbox === true) {
+			headEl.push(<th key = {-1}><input type='checkbox' style = {{'cursor' : 'pointer'}} id= 'selectAll' onClick = {props.selectAll} /></th>)
 		};
-		const headEl = head.map((i, k1) => <th key={k1}>{i}</th>)
-		
+		for (let i in props.data.head) {
+			headEl.push(<th key={i}>{props.data.head[i]}</th>)
+		};
+
 		//body elements
-		const body = [];		
-		const lengthOfLoop =  Object.entries(props.data)[0][1].displayBody.length;
-		for (let j = 0; j < lengthOfLoop; j++) {
-	    let row = [];    
-	    for (let i in props.data) {
-	      row.push(props.data[i].displayBody[j]);    
-	    };
-	    body.push(row)
-		};
-		const bodyEl = (
-			body.map((i, k2) => (
-				<tr key={k2}>
-					{i.map((j, k3) => <td key={k3}>{j}</td>)}
+		let bodyEl = [];
+		for(let k in props.data.body) {
+			bodyEl.push (
+				<tr key = {k} style = {{'cursor': props.clickable ? 'pointer' : 'auto'}} >
+					{props.checkbox === true ? <td><input type = 'checkbox' className = 'check-input' id = {k} style = {{'cursor' : 'pointer'}} /></td> : null}
+					{	props.data.body[k].map((m,n) => (
+							props.clickable ? <td key = {n} onClick = {props.goTo} >{m}</td> : <td key = {n} >{m}</td>
+						))
+					}
 				</tr>
-			))
-		);
+			);				
+		}
 		
 		display = (	
 			<div className='table-responsive'>

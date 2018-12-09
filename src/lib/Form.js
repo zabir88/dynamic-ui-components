@@ -13,8 +13,10 @@ const form = (props) => {
     formElementsArray.sort((a,b) => a.order - b.order);
   };
 
-  formElementsArray.forEach(formElement => {
+  for (let formElement of formElementsArray) {
     switch (formElement.elementType) {
+      
+      // Element type input
       case('input'):
         if(formElement.elementConfig.type === 'submit') {
           inputElement.push(
@@ -22,20 +24,19 @@ const form = (props) => {
           );
         }
         else if(formElement.elementConfig.type === 'checkbox') {
-          inputElement.push(formElement.label === undefined ? null : <label>{formElement.label}</label>);
-          inputElement.push(
-            formElement.elementConfig.options.map((option, i) => {
-              return (
-                <div className= 'form-group' key={i}>
-                  <div className="form-check">
-                    <label className="form-check-label">
-                      <input {...formElement.elementConfig} defaultChecked={option.defaultChecked} value={option.value} onChange={props.changed} /> 
+          inputElement.push (
+            <div className = 'form-group'> 
+              {formElement.label === undefined ? null : <label>{formElement.label}</label> }
+              { formElement.options.map((option, i) => (
+                  <div className = "form-check" key = {i} >
+                    <label className = "form-check-label" id = {formElement.elementConfig.id}>
+                      <input {...formElement.elementConfig} defaultChecked = {option.defaultChecked} value = {option.value} id = {`${i+1}`} onChange = {props.changed} /> 
                       {option.displayValue}
                     </label>
                   </div>
-                </div>
-              )
-            })   
+                ))
+              }  
+            </div> 
           );
         }
         // else if(formElement.elementConfig.type === 'radio') {
@@ -52,53 +53,60 @@ const form = (props) => {
         // }
         else {
           inputElement.push(
-            <div className='form-group'>
-              { formElement.label === undefined ? null : <label>{formElement.label}</label> }
-              <input {...formElement.elementConfig} onChange={props.changed} />
-              {formElement.errorMessage === undefined ? null : <div className='text-center text-danger'>{formElement.errorMessage}</div>}
+            <div className = 'form-group'>
+              { formElement.label === undefined || formElement.label === null ? null : <label>{formElement.label}</label> }
+              <input {...formElement.elementConfig} onChange = {props.changed} />
+              {formElement.errorMessage === undefined ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
             </div> 
           );
         }
         break;
+      
+      // Element type textarea
       case('textarea') : 
         inputElement.push(
           <div className='form-group'>
             { formElement.label === undefined ? null : <label>{formElement.label}</label> }
-            <textarea {...formElement.elementConfig} onChange={props.changed} />
-            {formElement.errorMessage === undefined ? null : <div className='text-center text-danger'>{formElement.errorMessage}</div>}
+            <textarea {...formElement.elementConfig} onChange = {props.changed} />
+            {formElement.errorMessage === undefined ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
           </div>
         );
         break;
+      
+      // Element type dropdown
       case ('select'): 
         inputElement.push(
-          <div className='form-group'>
+          <div className ='form-group'>
             { formElement.label === undefined ? null : <label>{formElement.label}</label> }
-            <select {...formElement.elementConfig} onChange={props.changed}>
+            <select {...formElement.elementConfig} onChange = {props.changed}>
               { formElement.options.map((option, i) => (                
-                <option key={i} value={option.value} disabled={option.disabled ? true : false}>
+                <option key = {i} value = {option.value} disabled = {option.disabled ? true : false}>
                   {option.displayValue}
                 </option>))
               }
             </select>
-            {formElement.errorMessage === undefined ? null : <div className='text-center text-danger'>{formElement.errorMessage}</div>}
+            {formElement.errorMessage === undefined ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
           </div>
         );
         break;
+      
+      // Element type button
       case ('button'):
         inputElement.push(
-          <button {...formElement.elementConfig} onClick={formElement.cancelHandler}>{formElement.elementConfig.value}</button>
+          <button {...formElement.elementConfig} onClick = {formElement.cancelHandler}>{formElement.elementConfig.value}</button>
         )
         break;
-      default :
-        inputElement.push(<div />);
+      
+      default:
+        inputElement.push(<div/>);
         break;
-    }
-  });
+    };
+  };
 
   return (
-    <form style={props.formStyling} onSubmit={props.submit} >
+    <form style = {props.formStyling} onSubmit = {props.submit} >
       { inputElement.map((el, i) => (
-          <Aux key={i}>
+          <Aux key = {i}>
             {el}
           </Aux>
         ))

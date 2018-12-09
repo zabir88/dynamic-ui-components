@@ -26,7 +26,7 @@ Currently the form supports the following:
 5. password field
 6. email field 
 7. textareas
-8. check-boxes
+8. checkboxes
 
 ### Props
 | Name          | Type     | Description                                                                           |
@@ -39,28 +39,42 @@ Currently the form supports the following:
 
 Use case example: 
 
-Create this.state.formInputs in the structure shown below in your constructor() or componentDidMount() method.
+Create this.state.formInputs in the structure shown below in your constructor() or componentDidMount() method. Keep the key of each field and their corresponding id to be the same. 
 ```
 this.state = {
   formInputs: {
-    name: {
+    firstName: {
       elementType: 'input',
-      order: 1,
+      label: null,
       elementConfig: {
         type: 'text',
         value: '',
         placeholder: 'Name',
-        id: 'name',
+        id: 'firstName',
         className: 'form-control'
       }
     },
-    usCitizenship: {
+    checkboxes: {
+      elementType: 'input',
+      label: 'Checkboxes',
+      elementConfig: {
+        type: 'checkbox',
+        className: 'form-check-input',
+        id: 'checkboxes',
+        value: {}
+      },
+      options: [
+        {value: 'option one', displayValue: 'Option One', defaultChecked: false},
+        {value: 'option two', displayValue: 'Option Two', defaultChecked: false},
+        {value: 'option three', displayValue: 'Option Three', defaultChecked: false}
+      ]
+    },
+    dropdown: {
       elementType: 'select',
-      label: 'US Citizenship',
-      order: 2,
+      label: 'Dropdown',
       elementConfig: {
         value: 'Please select one',
-        id: 'usCitizenship',
+        id: 'dropdown',
         className: 'form-control' 
       },
       options: [
@@ -72,7 +86,6 @@ this.state = {
     description: {
       elementType:'textarea',
       label: 'Description',
-      order: 3,
       elementConfig: {
         value: '',
         id:'description',
@@ -80,17 +93,17 @@ this.state = {
         className: 'form-control'
       }
     }
-  };
+  }
 };
 ```
 Call the component
 ```
 <Form 
-  formInputs={this.state.formInputs} 
-  changed={this.inputChangeHandler.bind(this)} 
-  sort={true} 
-  formStyling={{topPadding: '20px'}} 
-  submit={this.submitDataHandler.bind(this))}
+  formInputs = {this.state.formInputs} 
+  changed = {this.inputChangeHandler.bind(this)} 
+  sort = {true} 
+  formStyling = {{topPadding: '20px'}} 
+  submit = {this.submitDataHandler.bind(this))}
 />
 ```
 ## Alert
@@ -117,7 +130,7 @@ Call the component
 render () {
   if (this.state.alert.show) {  
     return (
-      <Alert bsStyle={'success'} dismiss={this.alertDismissHandler}>
+      <Alert bsStyle = {'success'} dismiss = {this.alertDismissHandler}>
         <p>Thank You!</p>
       </Alert>
     )
@@ -152,17 +165,17 @@ state = {
 Call the component
 
 ```
-<Breadcrumb links={this.state.breadcrumbLinks}/>
+<Breadcrumb links = {this.state.breadcrumbLinks}/>
 ```
 ## Pagination
 ### Props
-| Name          | Type     | Description                                                         |
-| ------------- |:--------:| --------------------------------------------------------------------|
-| links         | Object   | Describes the pagination links.Please check the example below.      |
-| pageChange    | function | Takes page change event handler function to change page.            |
-| perPage       | Number   | takes integer value to display count per page.                      |
-| currentPage   | Number   | Current page.                                                       |
-| total         | Number   | takes total value to display total count.                           |
+| Name          | Type     | Description                                                   |
+| ------------- |:--------:| --------------------------------------------------------------|
+| links         | Object   | Describes the pagination links.Please check the example below.|
+| pageChange    | function | Takes page change event handler function to change page.      |
+| perPage       | Number   | takes integer value to display count per page.                |
+| currentPage   | Number   | Current page.                                                 |
+| total         | Number   | takes total value to display total count.                     |
 
 Use case example:
 ```
@@ -210,6 +223,7 @@ pageChangedHandler = (event) => {
   else {
     nextPage = Number(event.target.id);
   };
+  // this is wehre you make the api call to update the data;
   updatedPagination.links[currentLinkId].active = false;
   updatedPagination.links[nextPage].active = true;
   updatedPagination.currentPage  = nextPage;
@@ -219,33 +233,34 @@ pageChangedHandler = (event) => {
 Call the component
 ```
 <Pagination 
-  links={this.state.pagination.links} 
-  pageChange={this.pageChangedHandler}   
-  perPage={this.state.pagination.perPage} 
-  currentPage= {this.state.pagination.currentPage} 
-  total={this.state.pagination.total}
-  position={'right'}
+  links = {this.state.pagination.links} 
+  pageChange ={this.pageChangedHandler}   
+  perPage = {this.state.pagination.perPage} 
+  currentPage = {this.state.pagination.currentPage} 
+  total = {this.state.pagination.total}
+  position = {'right'}
 />
 ```
 
 ## Spinner
 ### Props
-| Name          | Type     | Description                                           |
-| ------------- |:--------:| ------------------------------------------------------|
-| size          | Object   | Dictates the size of the spinner. Number from 1 to 5. |
+| Name          | Type     | Description                                                       |
+| ------------- |:--------:| ------------------------------------------------------------------|
+| size          | Integer  | Dictates the size of the spinner. Number from 1 to 5.             |
+| style         | String   | one of: "spinner", "refresh", "gear", "cog". Default is 'spinner'.|
 
 Call the component
 ```
-<Spinner size={<any integer from 1 to 5>}/>
+<Spinner style = {'spinner'} size = {<any integer from 1 to 5>}/>
 ```
 
 ## Table
 ### Props
-| Name          | Type     | Description                                                    |
-| ------------- |:--------:| ---------------------------------------------------------------|
-| data          | Number   | Describes the data presented. Please follow the example below. |
-| border        | Boolean  | Adds border to the table if true. Default is false.            |
-| headColor     | String   | Takes 'light' or 'dark' as string values. Default 'light'      |
+| Name          | Type     | Description                                                   |
+| ------------- |:--------:| --------------------------------------------------------------|
+| data          | Number   | Describes the data presented. Please follow the example below.|
+| border        | Boolean  | Adds border to the table if true. Default is false.           |
+| headColor     | String   | Takes 'light' or 'dark' as string values. Default 'light'     |
 
 Use case example:
 
@@ -270,7 +285,7 @@ state = {
 ```
 Call the component
 ```
-<Table data={this.state.tableData} border={true} headColor={'dark'}/>
+<Table data = {this.state.tableData} border = {true} headColor = {'dark'}/>
 ```
 ## License
 Dynamic-UI-Components is licensed under the terms of the MIT license.
