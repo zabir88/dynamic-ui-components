@@ -19,8 +19,8 @@ const table = (props) => {
 		let bodyEl = [];
 		for(let k in props.data.body) {
 			bodyEl.push (
-				<tr key = {k} style = {{'cursor': props.clickable ? 'pointer' : 'auto'}} >
-					{props.checkbox === true ? <td><input type = 'checkbox' className = 'check-input' id = {k} style = {{'cursor' : 'pointer'}} /></td> : null}
+				<tr key = {k} id= {k} style = {{'cursor': props.clickable ? 'pointer' : 'auto'}} >
+					{props.checkbox === true ? <td><input type = 'checkbox' className = 'check-input' style = {{'cursor' : 'pointer'}} /></td> : null}
 					{	props.data.body[k].map((m,n) => (
 							props.clickable ? <td key = {n} onClick = {props.goTo} >{m}</td> : <td key = {n} >{m}</td>
 						))

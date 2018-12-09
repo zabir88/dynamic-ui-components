@@ -287,18 +287,14 @@ Props data must be in the format shown below:
 ```
 state = {
   tableData: {
-    number: {
-      displayHead: '#',
-      displayBody: ['1', '2', '3', '4']
-    }, 
-    firstName: {
-      displayHead: 'First Name',
-      displayBody: ['Jon', 'Danery', 'Tyrion', 'Bran']
-    }, 
-    lastName: {
-      displayHead: 'Last Name',
-      displayBody: ['Snow', 'Targaryean', 'Lannister', 'Stark']
-    }
+    head: ['First Name', 'Last Name'],
+    body: [
+      ['jon', 'snow'],
+      ['bran','stark'],
+      ['danery', 'targaryean'],
+      ['tyrion', 'lannister'],
+    ],
+    routes: []
   }
 }
 
