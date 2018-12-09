@@ -95,6 +95,21 @@ this.state = {
     }
   }
 };
+
+inputChangedHandler = (event) => {
+  const updatedFormInputs = {...this.state.formInputs};
+  if(event.target.type === 'checkbox') {
+    if(event.target.checked === true) {
+      updatedFormInputs[event.target.parentNode.id].elementConfig.value[event.target.id] = event.target.value;  
+    } else {
+      delete updatedFormInputs[event.target.parentNode.id].elementConfig.value[event.target.id]
+    };
+  } else {
+    updatedFormInputs[event.target.id].elementConfig.value = event.target.value
+  };
+  this.setState({formInputs: updatedFormInputs});
+};
+
 ```
 Call the component
 ```
@@ -247,20 +262,24 @@ Call the component
 | Name          | Type     | Description                                                       |
 | ------------- |:--------:| ------------------------------------------------------------------|
 | size          | Integer  | Dictates the size of the spinner. Number from 1 to 5.             |
-| style         | String   | one of: "spinner", "refresh", "gear", "cog". Default is 'spinner'.|
+| type          | String   | one of: "spinner", "refresh", "gear", "cog". Default is 'spinner'.|
 
 Call the component
 ```
-<Spinner style = {'spinner'} size = {<any integer from 1 to 5>}/>
+<Spinner type = {'spinner'} size = {<any integer from 1 to 5>}/>
 ```
 
 ## Table
 ### Props
-| Name          | Type     | Description                                                   |
-| ------------- |:--------:| --------------------------------------------------------------|
-| data          | Number   | Describes the data presented. Please follow the example below.|
-| border        | Boolean  | Adds border to the table if true. Default is false.           |
-| headColor     | String   | Takes 'light' or 'dark' as string values. Default 'light'     |
+| Name        | Type     | Description                                                   |
+| ------------|:--------:| --------------------------------------------------------------|
+| data        | Number   | Describes the data presented. Please follow the example below.|
+| border      | Boolean  | Adds border to the table if true. Default is false.           |
+| headColor   | String   | Takes 'light' or 'dark' as string values. Default 'light'     |
+| clickable   | Boolean  | Takes 'light' or 'dark' as string values. Default 'light'     |
+| checkbox    | Boolean  | Takes 'light' or 'dark' as string values. Default 'light'     |
+| selectAll   | Function | Takes 'light' or 'dark' as string values. Default 'light'     |
+| goTo        | Function | Takes 'light' or 'dark' as string values. Default 'light'     |
 
 Use case example:
 
@@ -282,10 +301,35 @@ state = {
     }
   }
 }
+
+selectAllHandler = (event) => {
+  let all = document.getElementsByClassName("check-input");
+  for(let i = 0; i < all.length; i++) {
+    if(event.target.checked) {
+      all[i].checked = true;
+    };
+    if(!event.target.checked) {
+      all[i].checked = false;
+    };
+  };
+}
+
+goToHandler = (event) => {
+  // navigate to a different url;
+  window.location = 'https://google.com';
+}
 ```
 Call the component
 ```
-<Table data = {this.state.tableData} border = {true} headColor = {'dark'}/>
+<Table 
+  data = {this.state.tableData} 
+  clickable = {true} 
+  checkbox = {true} 
+  border = {false} 
+  headColor = {'dark'}
+  selectAll = {this.selectAllHandler.bind(this)}
+  goTo = {this.goToHandler.bind(this)}
+/>
 ```
 ## License
 Dynamic-UI-Components is licensed under the terms of the MIT license.
