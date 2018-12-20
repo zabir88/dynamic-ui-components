@@ -55,7 +55,7 @@ class App extends Component {
       }
     },
     alert: {
-      show: true 
+      show: false 
     },
     formInputs: {
       name: {
@@ -147,6 +147,10 @@ class App extends Component {
 
   submitDataHandler = (event) => {
     event.preventDefault();
+    let updatedAlert = {...this.state.alert};
+    updatedAlert.show = true;
+    
+    this.setState({alert: updatedAlert});
     // Form validation goes here
     // clear form validation errors 
     // make api call to post form
@@ -193,6 +197,7 @@ class App extends Component {
   }
 
   render() {
+
     let display =  (
       <div className = "container" style = {{paddingTop: '50px'}}>
         <h1>Dynamic-UI-Components</h1>

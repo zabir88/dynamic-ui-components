@@ -8,8 +8,15 @@ class alert extends Component {
 	dismissHandler = (event) => {
 		this.setState({show: false})
 	}
+	
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.show !== this.state.show) {
+    	this.setState({ show: nextProps.show });
+  	};
+	}
 
 	render () {
+		console.log('bla: ', this.state.show)
 		let type = null;
 		if (this.props.bsStyle === null  || this.props.bsStyle === undefined || this.props.bsStyle === '') {
 			type = 'alert alert-primary'
