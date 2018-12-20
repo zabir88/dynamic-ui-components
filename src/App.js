@@ -9,14 +9,13 @@ import Table from './lib/Table';
 class App extends Component {
   state = {
     tableData: {
-      head: ['First Name', 'Last Name'],
-      body: [
-        ['jon', 'snow'],
-        ['bran','stark'],
-        ['danery', 'targaryean'],
-        ['tyrion', 'lannister'],
-      ],
-      routes: []
+      head: ['Company', 'Founded'],
+      body: [ 
+        {value: ['Google LLC', '1998'], route: 'https://en.wikipedia.org/wiki/Google'},
+        {value: ['Amazon Inc','1994'], route: 'https://en.wikipedia.org/wiki/Amazon_(company)'},
+        {value: ['Facebook Inc', '2004'], route: 'https://en.wikipedia.org/wiki/Facebook'},
+        {value: ['Microsoft Corporation', '1975'], route: 'https://en.wikipedia.org/wiki/Microsoft'}
+      ]     
     },
     breadcrumbLinks: {
       1: {
@@ -108,6 +107,26 @@ class App extends Component {
           placeholder: 'Please enter description...',
           className: 'form-control'
         }
+      },
+      submit: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'submit',
+          value: 'Submit',
+          className: 'btn btn-info'
+        }
+      },
+      cancel: {
+        elementType: 'button',
+        elementConfig: {
+          value: 'Cancel',
+          className: 'btn btn-primary',
+          style: {marginLeft: '5px'}
+        },
+        cancelHandler: (event) => {
+          event.preventDefault();
+          // this.props.history.goBack();
+        }
       }
     } 
   }
@@ -126,21 +145,25 @@ class App extends Component {
     this.setState({formInputs: updatedFormInputs});
   }
 
-  selectAllHandler = (event) => {
-    let all = document.getElementsByClassName("check-input");
-    for(let i = 0; i < all.length; i++) {
-      if(event.target.checked) {
-        all[i].checked = true;
-      };
-      if(!event.target.checked) {
-        all[i].checked = false;
-      };
-    };
+  submitDataHandler = (event) => {
+    event.preventDefault();
+    // Form validation goes here
+    // clear form validation errors 
+    // make api call to post form
+    // render flash message 
   }
 
-  goToHandler = (event) => {
+  goToHandler = (param, event) => {
     // navigate to a different url;
-    window.location = 'https://google.com';
+    window.location = String(param);
+  }
+
+  selectAllRowHandler = (event) => {
+    console.log(event.target.value);
+  }
+
+  selectEachRowHandler = (event) => {
+    console.log(event.target.value);
   }
 
   pageChangeHandler = (event) => {
@@ -169,19 +192,7 @@ class App extends Component {
     //}
   }
 
-  alertDismissHandler = () => {
-    this.setState({alert: {show: false}})
-  }
-
   render() {
-    let alert = null;
-    if (this.state.alert.show) {
-      alert = (
-        <Alert bsStyle = {'success'} dismiss = {this.alertDismissHandler}>
-          <p>Thank You!</p>
-        </Alert>
-      );  
-    };
     let display =  (
       <div className = "container" style = {{paddingTop: '50px'}}>
         <h1>Dynamic-UI-Components</h1>
@@ -190,10 +201,14 @@ class App extends Component {
         <Breadcrumb links = {this.state.breadcrumbLinks}/>
         <br/>
         <h3>Flash Message</h3>
-        {alert}
+        <Alert bsStyle = {'success'} text = {'Thank You!'} show = {this.state.alert.show} />
         <br/>
         <h3>Form</h3>
-        <Form formInputs = {this.state.formInputs} changed = {this.inputChangedHandler.bind(this)} />
+        <Form 
+          formInputs = {this.state.formInputs} 
+          changed = {this.inputChangedHandler.bind(this)} 
+          submit = {this.submitDataHandler.bind(this)}
+        />
         <br/>
         <h3>Spinner</h3>
         <Spinner type = {'spinner'} size = {4} />
@@ -205,14 +220,15 @@ class App extends Component {
           checkbox = {true} 
           border = {false} 
           headColor = {'dark'}
-          selectAll = {this.selectAllHandler.bind(this)}
+          selectAllRow = {this.selectAllRowHandler.bind(this)}
+          selectEachRow = {this.selectEachRowHandler.bind(this)}
           goTo = {this.goToHandler.bind(this)}
          /> 
         <br/>
         <h3>Pagination</h3>
         <Pagination 
           links = {this.state.pagination.links} 
-          pageChange = {this.pageChangeHandler} 
+          pageChange = {this.pageChangeHandler.bind(this)} 
           position = {'right'}  
           perPage = {this.state.pagination.perPage} 
           currentPage = {this.state.pagination.currentPage} 

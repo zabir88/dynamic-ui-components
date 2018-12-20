@@ -32,9 +32,9 @@ Currently the form supports the following:
 | Name          | Type     | Description                                                                           |
 | ------------- |:--------:| --------------------------------------------------------------------------------------|
 | formInputs    | Object   | Describes the inputs of the form.Please check the example below.                      |
-| changed       | function | Takes input event handler function to set/update form input values.                   |
-| sort          | boolean  | Sorts the form inputs in a given order. Must provide order key in the each form input.|
-| submit        | function | Takes submit handler function to submit the form.                                     |
+| sort          | Boolean  | Sorts the form inputs in a given order. Must provide order key in the each form input.|
+| submit        | Function | Takes submit handler function to submit the form.                                     |
+| changed       | Function | Takes input event handler function to set/update form input values.                   |
 | formStyling   | Object   | Style the form with paddings, margins, color, backgroudcolors etc.                    |
 
 Use case example: 
@@ -92,8 +92,28 @@ this.state = {
         placeholder: 'Please enter description...',
         className: 'form-control'
       }
+    },
+    submit: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'submit',
+        value: 'Submit',
+        className: 'btn btn-info'
+      }
+    },
+    cancel: {
+      elementType: 'button',
+      elementConfig: {
+        value: 'Cancel',
+        className: 'btn btn-primary',
+        style: {marginLeft: '5px'}
+      },
+      cancelHandler: (event) => {
+        event.preventDefault();
+        this.props.history.goBack();
+      }
     }
-  }
+  };
 };
 
 inputChangedHandler = (event) => {
@@ -118,15 +138,16 @@ Call the component
   changed = {this.inputChangeHandler.bind(this)} 
   sort = {true} 
   formStyling = {{topPadding: '20px'}} 
-  submit = {this.submitDataHandler.bind(this))}
+  submit = {this.submitDataHandler.bind(this)}
 />
 ```
 ## Alert
 ### Props
-| Name          | Type                                                     | 
-| --------------|----------------------------------------------------------|
-| bsStyle       | one of: "success", "warning", "danger", "info", "primary"|
-| dismiss       | function                                                 |
+| Name          | Type                                                     | Description                               |  
+| --------------|:--------------------------------------------------------:|-------------------------------------------|
+| bsStyle       | one of: "success", "warning", "danger", "info", "primary"|                                           |
+| text          | String                                                   | Describes the text that will be displayed.|
+| show          | Boolean                                                  | True will display the flash message.      |
 
 Use case example: 
 ```
@@ -136,21 +157,11 @@ state = {
   }
 };
 
-alertDismissHandler = () => {
-  this.setState({alert: {show: false}})
-}
 ```
 Call the component
 ```
-render () {
-  if (this.state.alert.show) {  
-    return (
-      <Alert bsStyle = {'success'} dismiss = {this.alertDismissHandler}>
-        <p>Thank You!</p>
-      </Alert>
-    )
-  };
-}
+<Alert bsStyle = {'success'} text = {'Thank You!'} show = {this.state.alert.show} />
+
 ```
 ## Breadcrumb
 ### Props
@@ -187,7 +198,7 @@ Call the component
 | Name          | Type     | Description                                                   |
 | ------------- |:--------:| --------------------------------------------------------------|
 | links         | Object   | Describes the pagination links.Please check the example below.|
-| pageChange    | function | Takes page change event handler function to change page.      |
+| pageChange    | Function | Takes page change event handler function to change page.      |
 | perPage       | Number   | takes integer value to display count per page.                |
 | currentPage   | Number   | Current page.                                                 |
 | total         | Number   | takes total value to display total count.                     |
@@ -249,7 +260,7 @@ Call the component
 ```
 <Pagination 
   links = {this.state.pagination.links} 
-  pageChange ={this.pageChangedHandler}   
+  pageChange ={this.pageChangedHandler.bind(this)}   
   perPage = {this.state.pagination.perPage} 
   currentPage = {this.state.pagination.currentPage} 
   total = {this.state.pagination.total}
@@ -271,15 +282,16 @@ Call the component
 
 ## Table
 ### Props
-| Name        | Type     | Description                                                   |
-| ------------|:--------:| --------------------------------------------------------------|
-| data        | Number   | Describes the data presented. Please follow the example below.|
-| border      | Boolean  | Adds border to the table if true. Default is false.           |
-| headColor   | String   | Takes 'light' or 'dark' as string values. Default 'light'     |
-| clickable   | Boolean  | Takes 'light' or 'dark' as string values. Default 'light'     |
-| checkbox    | Boolean  | Takes 'light' or 'dark' as string values. Default 'light'     |
-| selectAll   | Function | Takes 'light' or 'dark' as string values. Default 'light'     |
-| goTo        | Function | Takes 'light' or 'dark' as string values. Default 'light'     |
+| Name        | Type     | Description                                                            |
+| ------------|:--------:| -----------------------------------------------------------------------|
+| data        | Object   | Describes the data presented. Please follow the example below.         |
+| border      | Boolean  | Adds border to the table if true. Default is false.                    |
+| headColor   | String   | Takes 'light' or 'dark' as string values. Default 'light'              |
+| clickable   | Boolean  | If true then pass goTo props to navigate.                              |
+| checkbox    | Boolean  | If true then it adds an additional column of checkboxes.               |
+| goTo        | Function | Navigates to a given route when a row in the table is clicked.         |
+| selectAllRow| Function | Returns all input value attribute of each row.                         |
+ selectEachRow| Function | Returns selected input value attribute .                               |
 
 Use case example:
 
@@ -287,32 +299,27 @@ Props data must be in the format shown below:
 ```
 state = {
   tableData: {
-    head: ['First Name', 'Last Name'],
-    body: [
-      ['jon', 'snow'],
-      ['bran','stark'],
-      ['danery', 'targaryean'],
-      ['tyrion', 'lannister'],
-    ],
-    routes: []
+    head: ['Company', 'Founded'],
+    body: [ 
+      {value: ['Google LLC', '1998'], route: 'https://en.wikipedia.org/wiki/Google'},
+      {value: ['Amazon Inc','1994'], route: 'https://en.wikipedia.org/wiki/Amazon_(company)'},
+      {value: ['Facebook Inc', '2004'], route: 'https://en.wikipedia.org/wiki/Facebook'},
+      {value: ['Microsoft Corporation', '1975'], route: 'https://en.wikipedia.org/wiki/Microsoft'}
+    ]     
   }
 }
 
-selectAllHandler = (event) => {
-  let all = document.getElementsByClassName("check-input");
-  for(let i = 0; i < all.length; i++) {
-    if(event.target.checked) {
-      all[i].checked = true;
-    };
-    if(!event.target.checked) {
-      all[i].checked = false;
-    };
-  };
+goToHandler = (param, event) => {
+  // navigate to the given route;
+  window.location = String(param);
 }
 
-goToHandler = (event) => {
-  // navigate to a different url;
-  window.location = 'https://google.com';
+selectAllRowHandler = (event) => {
+  console.log(event.target.value);
+}
+
+selectEachRowHandler = (event) => {
+  console.log(event.target.value);
 }
 ```
 Call the component
@@ -323,8 +330,9 @@ Call the component
   checkbox = {true} 
   border = {false} 
   headColor = {'dark'}
-  selectAll = {this.selectAllHandler.bind(this)}
   goTo = {this.goToHandler.bind(this)}
+  selectAllRow = {this.selectAllRowHandler.bind(this)}
+  selectEachRow = {this.selectEachRowHandler.bind(this)}
 />
 ```
 ## License

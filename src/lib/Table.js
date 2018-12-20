@@ -1,50 +1,104 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const table = (props) => {
-	let display;
-	if(props.data === undefined || props.data === null) {
-		display = null;
-	}
-	else {
-		// head elements
-		let headEl = [];
-		if(props.checkbox === true) {
-			headEl.push(<th key = {-1}><input type='checkbox' style = {{'cursor' : 'pointer'}} id= 'selectAll' onClick = {props.selectAll} /></th>)
-		};
-		for (let i in props.data.head) {
-			headEl.push(<th key={i}>{props.data.head[i]}</th>)
-		};
+class table extends Component {
 
-		//body elements
-		let bodyEl = [];
-		for(let k in props.data.body) {
-			bodyEl.push (
-				<tr key = {k} id= {k} style = {{'cursor': props.clickable ? 'pointer' : 'auto'}} >
-					{props.checkbox === true ? <td><input type = 'checkbox' className = 'check-input' style = {{'cursor' : 'pointer'}} /></td> : null}
-					{	props.data.body[k].map((m,n) => (
-							props.clickable ? <td key = {n} onClick = {props.goTo} >{m}</td> : <td key = {n} >{m}</td>
-						))
-					}
-				</tr>
-			);				
+	selectAllHandler = (event) => {
+    let all = document.getElementsByClassName("check-input");
+    let rows = document.getElementsByClassName("select-rows")
+    for(let i = 0; i < all.length; i++) {
+      if(event.target.checked) {
+        all[i].checked = true;
+        rows[i].style.backgroundColor = '#eee';
+      };
+      if(!event.target.checked) {
+        all[i].checked = false;
+        rows[i].style.backgroundColor = null;
+      };
+    };
+  }
+
+  selectEachHandler = (event) => {
+    let grandParentEl = event.target.parentNode.parentNode;
+    if(event.target.checked) {
+      grandParentEl.style.backgroundColor = '#eee';
+    } else {
+      grandParentEl.style.backgroundColor = null;
+    };
+  }
+
+	render () {
+		let display;
+		if(this.props.data === undefined || this.props.data === null) {
+			display = null;
 		}
-		
-		display = (	
-			<div className='table-responsive'>
-				<table className={props.border === undefined || props.border === false ? 'table table-hover' : 'table table-hover table-bordered' }>
-				  <thead className={props.headColor === undefined || props.headColor === null ? `thead-light` : `thead-${props.headColor}`}>
-				    <tr>
-				    	{headEl}
-				    </tr>
-				  </thead>
-				  <tbody>
-				    {bodyEl}
-				  </tbody>
-				</table>
-			</div>
-		);
+		else {
+			// head elements
+			let headEl = [];
+			if(this.props.checkbox === true) {
+				headEl.push(
+					<th key = {-1}>
+						<input 
+							type = 'checkbox' 
+							style = {{'cursor' : 'pointer'}} 
+							value = {this.props.data.body.map(i => i.value) }
+							onChange = {this.selectAllHandler.bind(this)}
+							onClick = {this.props.selectAllRow}
+						/>
+					</th>
+				)
+			};
+			
+			for (let i in this.props.data.head) {
+				headEl.push(
+					<th key = {i}>
+						{this.props.data.head[i]} 
+					</th>
+				)
+			};
+
+			//body elements
+			let bodyEl = [];		
+			for(let eachData in this.props.data.body) {
+				bodyEl.push (
+					<tr key = {eachData} className = 'select-rows' style = {{cursor: this.props.clickable ? 'pointer' : 'auto'}} >
+						{ this.props.checkbox ? 
+							<td>
+								<input 
+									type = 'checkbox' 
+									className = 'check-input' 
+									style = {{'cursor' : 'pointer'}} 
+									value = {this.props.data.body[eachData].value} 
+									onChange = {this.selectEachHandler.bind(this)} 
+									onClick = {this.props.selectEachRow} 
+								/>
+							</td> 
+							: null
+						}
+						{	this.props.data.body[eachData].value.map((m,n) => (
+								<td key = {n} onClick = {this.props.clickable ? this.props.goTo.bind(this, this.props.data.body[eachData].route) : null} > {m} </td> 
+							))
+						}
+					</tr>
+				);				
+			};
+			
+			display = (	
+				<div className='table-responsive'>
+					<table className={this.props.border === undefined || this.props.border === false ? 'table table-hover' : 'table table-hover table-bordered' }>
+					  <thead className={this.props.headColor === undefined || this.props.headColor === null ? `thead-light` : `thead-${this.props.headColor}`}>
+					    <tr>
+					    	{headEl}
+					    </tr>
+					  </thead>
+					  <tbody>
+					    {bodyEl}
+					  </tbody>
+					</table>
+				</div>
+			);
+		}
+		return display
 	}
-	return display
 }
 
 export default table;

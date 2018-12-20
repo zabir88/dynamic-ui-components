@@ -1,18 +1,37 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const alert = (props) => {
-	let type = null;
-	if (props.bsStyle === null  || props.bsStyle === undefined || props.bsStyle === '') {
-		type = 'alert alert-primary'
+class alert extends Component {
+	state = {
+		show: this.props.show
 	}
-	else {
-		type = `alert alert-${props.bsStyle}`;
-	};
-	return (
-		<div className={type}>
-			<button type="button" className="close" onClick={props.dismiss}>&times;</button>
-			{props.children}
-		</div>
-	)
-}
+
+	dismissHandler = (event) => {
+		this.setState({show: false})
+	}
+
+	render () {
+		let type = null;
+		if (this.props.bsStyle === null  || this.props.bsStyle === undefined || this.props.bsStyle === '') {
+			type = 'alert alert-primary'
+		}
+		else {
+			type = `alert alert-${this.props.bsStyle}`;
+		};
+		let display = null;
+		if(this.state.show) {
+			display = (
+				<div className={type}>
+					<button type="button" className="close" onClick = {this.dismissHandler.bind(this)}>&times;</button>
+					<p>
+						{this.props.text}
+					</p>
+				</div>	
+			)
+		}
+
+		return display	
+	}
+} 
+	
+
 export default alert;
