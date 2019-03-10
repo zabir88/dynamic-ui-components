@@ -16,7 +16,6 @@ class alert extends Component {
 	}
 
 	render () {
-		console.log('bla: ', this.state.show)
 		let type = null;
 		if (this.props.bsStyle === null  || this.props.bsStyle === undefined || this.props.bsStyle === '') {
 			type = 'alert alert-primary'

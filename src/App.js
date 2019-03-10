@@ -5,6 +5,7 @@ import Pagination from './lib/Pagination';
 import Breadcrumb from './lib/Breadcrumb';
 import Spinner from './lib/Spinner';
 import Table from './lib/Table';
+import GeneralTree from './tree/GeneralTree';
 
 class App extends Component {
   state = {
@@ -57,7 +58,7 @@ class App extends Component {
     alert: {
       show: false 
     },
-    formInputs: {
+    formOneInputs: {
       name: {
         elementType: 'input',
         label: null,
@@ -128,24 +129,77 @@ class App extends Component {
           // this.props.history.goBack();
         }
       }
-    } 
+    },
+    formTwoTreeData: [],
+    formTwoInputs: {} 
   }
 
-  inputChangedHandler = (event) => {
-    const updatedFormInputs = {...this.state.formInputs};
+  componentDidMount() {
+    //make api call to get the data. Example of api data:
+    let formTwoApiData = [
+      {label: 'child', elType: 'select', value: [true, false], id: 2, parentId: 1}, 
+      {label: 'moreChild', elType: 'input', subElType: 'text', id: 3, parentId: 1}, 
+      {label: 'parent', elType: 'select', value: [true, false], id: 1, parentId: null}, 
+      {label: 'grandChild', elType: 'input', subElType: 'number', id: 4, parentId: 2}
+    ];
+
+    let initFormTwoInputs = {...this.state.formTwoInputs};
+    let formTwoTreeData = {...this.state.formTwoTreeData};
+    let parentNode = {};
+    
+    for(let i of formTwoApiData) {
+      if(i.parentId === null) {
+        parentNode[i.id] = {
+          elementType: i.elType,
+          label: i.label,
+          id: i.id,
+          parentId: i.parentId,
+          children: {},
+          elementConfig: {
+            id: i.id,
+            className: 'form-control'
+          } 
+        };
+        if(i.elType === 'select') {
+          parentNode[Object.keys(parentNode)[0]].elementConfig['value'] = 'Please select one';
+          parentNode[Object.keys(parentNode)[0]]['options'] = [
+            {value: 'Please select one', displayValue: 'Please select one', disabled: true},
+            {value: i.value[0], displayValue: 'Yes', disabled: false},
+            {value: i.value[1], displayValue: 'No', disabled: false}
+          ]
+        } 
+        else if(i.elType === 'input' && i.subElType === 'checkbox') {
+          
+        }
+        else {
+          parentNode[Object.keys(parentNode)[0]].elementConfig['value'] = '';
+          parentNode[Object.keys(parentNode)[0]].elementConfig['type'] = i.subElType;
+          parentNode[Object.keys(parentNode)[0]].elementConfig['placeholder'] = i.label;
+        };
+      };
+    };
+
+    formTwoTreeData = new GeneralTree(parentNode);
+    console.log('data :', formTwoTreeData);
+    // this.setState({formTwoTreeData: formTwotreeData, formTwoInputs: initFormTwoInputs});
+  }
+
+
+  inputChangedHandlerFormOne = (event) => {
+    const updatedFormInputsOne = {...this.state.formOneInputs};
     if(event.target.type === 'checkbox') {
       if(event.target.checked === true) {
-        updatedFormInputs[event.target.parentNode.id].elementConfig.value[event.target.id] = event.target.value;  
+        updatedFormInputsOne[event.target.parentNode.id].elementConfig.value[event.target.id] = event.target.value;  
       } else {
-        delete updatedFormInputs[event.target.parentNode.id].elementConfig.value[event.target.id]
+        delete updatedFormInputsOne[event.target.parentNode.id].elementConfig.value[event.target.id]
       };
     } else {
-      updatedFormInputs[event.target.id].elementConfig.value = event.target.value
+      updatedFormInputsOne[event.target.id].elementConfig.value = event.target.value
     };
-    this.setState({formInputs: updatedFormInputs});
+    this.setState({formInputs: updatedFormInputsOne});
   }
 
-  submitDataHandler = (event) => {
+  submitDataHandlerFormOne = (event) => {
     event.preventDefault();
     let updatedAlert = {...this.state.alert};
     updatedAlert.show = true;
@@ -155,6 +209,58 @@ class App extends Component {
     // clear form validation errors 
     // make api call to post form
     // render flash message 
+  }
+
+  inputChangedHandlerFormTwo = (event) => {
+    let updatedFormTwoInputs = {...this.state.formTwoInputs.root};
+    let currentId = Number(event.target.id);
+    
+    // updating the current value in the form
+    updatedFormTwoInputs[currentId].elementConfig.value = event.target.value;
+
+    //adding new children to form elements
+    let childrenNode = {};
+    for(let i of this.state.formTwoApiData) {
+      if(i.parentId === currentId) {
+        childrenNode[i.id] = {
+          elementType: i.elType,
+          label: i.label,
+          id: i.id,
+          parentId: i.parentId,
+          children: {},
+          elementConfig: {
+            id: i.id,
+            className: 'form-control'
+          } 
+        };
+        if(i.elType === 'select') {
+          childrenNode[Object.keys(childrenNode)[0]].elementConfig['value'] = 'Please select one';
+          childrenNode[Object.keys(childrenNode)[0]]['options'] = [
+            {value: 'Please select one', displayValue: 'Please select one', disabled: true},
+            {value: i.value[0], displayValue: 'Yes', disabled: false},
+            {value: i.value[1], displayValue: 'No', disabled: false}
+          ];
+        } 
+        else if(i.elType === 'input' && i.subElType === 'checkbox') {
+          
+        }
+        else {
+          childrenNode[Object.keys(childrenNode)[0]].elementConfig['value'] = '';
+          childrenNode[Object.keys(childrenNode)[0]].elementConfig['type'] = i.subElType;
+          childrenNode[Object.keys(childrenNode)[0]].elementConfig['placeholder'] = i.label;
+        };      
+      };
+    };
+
+    updatedFormTwoInputs = new GeneralTree(updatedFormTwoInputs);        
+    for(let i in childrenNode) {
+      updatedFormTwoInputs.insert(childrenNode[i]);
+    };
+    console.log('updated :', updatedFormTwoInputs);
+    this.setState({formTwoInputs: updatedFormTwoInputs});  
+  }
+
+  submitDataHandlerFormTwo = (event) => {
   }
 
   goToHandler = (param, event) => {
@@ -197,7 +303,6 @@ class App extends Component {
   }
 
   render() {
-
     let display =  (
       <div className = "container" style = {{paddingTop: '50px'}}>
         <h1>Dynamic-UI-Components</h1>
@@ -208,11 +313,18 @@ class App extends Component {
         <h3>Flash Message</h3>
         <Alert bsStyle = {'success'} text = {'Thank You!'} show = {this.state.alert.show} />
         <br/>
-        <h3>Form</h3>
+        <h3>Sample Form 1</h3>
         <Form 
-          formInputs = {this.state.formInputs} 
-          changed = {this.inputChangedHandler.bind(this)} 
-          submit = {this.submitDataHandler.bind(this)}
+          formInputs = {this.state.formOneInputs} 
+          changed = {this.inputChangedHandlerFormOne.bind(this)} 
+          submit = {this.submitDataHandlerFormOne.bind(this)}
+        />
+        <br/>
+        <h3>Sample Form 2 (Dynamic Form)</h3>
+        <Form 
+          formInputs = {this.state.formTwoInputs.root} 
+          changed = {this.inputChangedHandlerFormTwo.bind(this)} 
+          submit = {this.submitDataHandlerFormTwo.bind(this)}
         />
         <br/>
         <h3>Spinner</h3>
@@ -242,6 +354,7 @@ class App extends Component {
         <br/>  
       </div>
     );
+
     return display
   }
 }
