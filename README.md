@@ -1,5 +1,5 @@
 # Dynamic-UI-Components
-An open source library of Dynamic UI components created using `React.js` and `bootstrap 4`.
+An open source library of reusable UI components created using `React.js` and `bootstrap 4`.
 
 ## Installation
 Run the following command:
