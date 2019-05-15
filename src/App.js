@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import Form from './lib/Form';
-import Alert from './lib/Alert';
-import Pagination from './lib/Pagination';
-import Breadcrumb from './lib/Breadcrumb';
-import Spinner from './lib/Spinner';
-import Table from './lib/Table';
-import GeneralTree from './tree/GeneralTree';
+import {Form, Alert, Pagination, Breadcrumb, Spinner, Table} from './lib';
 
 class App extends Component {
   state = {
@@ -56,7 +50,7 @@ class App extends Component {
       }
     },
     alert: {
-      show: false 
+      show: true 
     },
     formOneInputs: {
       name: {
@@ -129,61 +123,8 @@ class App extends Component {
           // this.props.history.goBack();
         }
       }
-    },
-    formTwoTreeData: [],
-    formTwoInputs: {} 
+    }
   }
-
-  componentDidMount() {
-    //make api call to get the data. Example of api data:
-    let formTwoApiData = [
-      {label: 'child', elType: 'select', value: [true, false], id: 2, parentId: 1}, 
-      {label: 'moreChild', elType: 'input', subElType: 'text', id: 3, parentId: 1}, 
-      {label: 'parent', elType: 'select', value: [true, false], id: 1, parentId: null}, 
-      {label: 'grandChild', elType: 'input', subElType: 'number', id: 4, parentId: 2}
-    ];
-
-    let initFormTwoInputs = {...this.state.formTwoInputs};
-    let formTwoTreeData = {...this.state.formTwoTreeData};
-    let parentNode = {};
-    
-    for(let i of formTwoApiData) {
-      if(i.parentId === null) {
-        parentNode[i.id] = {
-          elementType: i.elType,
-          label: i.label,
-          id: i.id,
-          parentId: i.parentId,
-          children: {},
-          elementConfig: {
-            id: i.id,
-            className: 'form-control'
-          } 
-        };
-        if(i.elType === 'select') {
-          parentNode[Object.keys(parentNode)[0]].elementConfig['value'] = 'Please select one';
-          parentNode[Object.keys(parentNode)[0]]['options'] = [
-            {value: 'Please select one', displayValue: 'Please select one', disabled: true},
-            {value: i.value[0], displayValue: 'Yes', disabled: false},
-            {value: i.value[1], displayValue: 'No', disabled: false}
-          ]
-        } 
-        else if(i.elType === 'input' && i.subElType === 'checkbox') {
-          
-        }
-        else {
-          parentNode[Object.keys(parentNode)[0]].elementConfig['value'] = '';
-          parentNode[Object.keys(parentNode)[0]].elementConfig['type'] = i.subElType;
-          parentNode[Object.keys(parentNode)[0]].elementConfig['placeholder'] = i.label;
-        };
-      };
-    };
-
-    formTwoTreeData = new GeneralTree(parentNode);
-    console.log('data :', formTwoTreeData);
-    // this.setState({formTwoTreeData: formTwotreeData, formTwoInputs: initFormTwoInputs});
-  }
-
 
   inputChangedHandlerFormOne = (event) => {
     const updatedFormInputsOne = {...this.state.formOneInputs};
@@ -209,58 +150,6 @@ class App extends Component {
     // clear form validation errors 
     // make api call to post form
     // render flash message 
-  }
-
-  inputChangedHandlerFormTwo = (event) => {
-    let updatedFormTwoInputs = {...this.state.formTwoInputs.root};
-    let currentId = Number(event.target.id);
-    
-    // updating the current value in the form
-    updatedFormTwoInputs[currentId].elementConfig.value = event.target.value;
-
-    //adding new children to form elements
-    let childrenNode = {};
-    for(let i of this.state.formTwoApiData) {
-      if(i.parentId === currentId) {
-        childrenNode[i.id] = {
-          elementType: i.elType,
-          label: i.label,
-          id: i.id,
-          parentId: i.parentId,
-          children: {},
-          elementConfig: {
-            id: i.id,
-            className: 'form-control'
-          } 
-        };
-        if(i.elType === 'select') {
-          childrenNode[Object.keys(childrenNode)[0]].elementConfig['value'] = 'Please select one';
-          childrenNode[Object.keys(childrenNode)[0]]['options'] = [
-            {value: 'Please select one', displayValue: 'Please select one', disabled: true},
-            {value: i.value[0], displayValue: 'Yes', disabled: false},
-            {value: i.value[1], displayValue: 'No', disabled: false}
-          ];
-        } 
-        else if(i.elType === 'input' && i.subElType === 'checkbox') {
-          
-        }
-        else {
-          childrenNode[Object.keys(childrenNode)[0]].elementConfig['value'] = '';
-          childrenNode[Object.keys(childrenNode)[0]].elementConfig['type'] = i.subElType;
-          childrenNode[Object.keys(childrenNode)[0]].elementConfig['placeholder'] = i.label;
-        };      
-      };
-    };
-
-    updatedFormTwoInputs = new GeneralTree(updatedFormTwoInputs);        
-    for(let i in childrenNode) {
-      updatedFormTwoInputs.insert(childrenNode[i]);
-    };
-    console.log('updated :', updatedFormTwoInputs);
-    this.setState({formTwoInputs: updatedFormTwoInputs});  
-  }
-
-  submitDataHandlerFormTwo = (event) => {
   }
 
   goToHandler = (param, event) => {
@@ -320,13 +209,6 @@ class App extends Component {
           submit = {this.submitDataHandlerFormOne.bind(this)}
         />
         <br/>
-        <h3>Sample Form 2 (Dynamic Form)</h3>
-        <Form 
-          formInputs = {this.state.formTwoInputs.root} 
-          changed = {this.inputChangedHandlerFormTwo.bind(this)} 
-          submit = {this.submitDataHandlerFormTwo.bind(this)}
-        />
-        <br/>
         <h3>Spinner</h3>
         <Spinner type = {'spinner'} size = {4} />
         <br/>
@@ -335,7 +217,7 @@ class App extends Component {
           data = {this.state.tableData} 
           clickable = {true} 
           checkbox = {true} 
-          border = {false} 
+          border = {true} 
           headColor = {'dark'}
           selectAllRow = {this.selectAllRowHandler.bind(this)}
           selectEachRow = {this.selectEachRowHandler.bind(this)}
