@@ -43,20 +43,22 @@ Create this.state.formInputs in the structure shown below in your constructor() 
 ```
 this.state = {
   formInputs: {
-    firstName: {
+    name: {
       elementType: 'input',
       label: null,
+      errorMessage: null,
       elementConfig: {
         type: 'text',
         value: '',
         placeholder: 'Name',
-        id: 'firstName',
+        id: 'name',
         className: 'form-control'
       }
     },
     checkboxes: {
       elementType: 'input',
       label: 'Checkboxes',
+      errorMessage: null,
       elementConfig: {
         type: 'checkbox',
         className: 'form-check-input',
@@ -64,14 +66,15 @@ this.state = {
         value: {}
       },
       options: [
-        {value: 'option one', displayValue: 'Option One', defaultChecked: false},
-        {value: 'option two', displayValue: 'Option Two', defaultChecked: false},
-        {value: 'option three', displayValue: 'Option Three', defaultChecked: false}
+        {value: 'option one', displayValue: 'Option One', checked: false},
+        {value: 'option two', displayValue: 'Option Two', checked: false},
+        {value: 'option three', displayValue: 'Option Three', checked: false}
       ]
     },
     dropdown: {
       elementType: 'select',
       label: 'Dropdown',
+      errorMessage: null,
       elementConfig: {
         value: 'Please select one',
         id: 'dropdown',
@@ -86,10 +89,12 @@ this.state = {
     description: {
       elementType:'textarea',
       label: 'Description',
+      errorMessage: null,
       elementConfig: {
         value: '',
         id:'description',
         placeholder: 'Please enter description...',
+        rows: 8,
         className: 'form-control'
       }
     },
@@ -110,26 +115,76 @@ this.state = {
       },
       cancelHandler: (event) => {
         event.preventDefault();
-        this.props.history.goBack();
+        this.props.history.push('/');
       }
     }
-  };
+  }
 };
 
-inputChangedHandler = (event) => {
-  const updatedFormInputs = {...this.state.formInputs};
+inputChangedHandlerFormOne = (event) => {
+  const updatedFormInputsOne = {...this.state.formInputs};
   if(event.target.type === 'checkbox') {
-    if(event.target.checked === true) {
-      updatedFormInputs[event.target.parentNode.id].elementConfig.value[event.target.id] = event.target.value;  
-    } else {
-      delete updatedFormInputs[event.target.parentNode.id].elementConfig.value[event.target.id]
+    if(event.target.checked) {
+      updatedFormInputsOne[event.target.parentNode.id].options[event.target.id].checked = true;
+    } 
+    else {
+      updatedFormInputsOne[event.target.parentNode.id].options[event.target.id].checked = false;
     };
-  } else {
-    updatedFormInputs[event.target.id].elementConfig.value = event.target.value
+    if(event.target.checked === true) {
+      updatedFormInputsOne[event.target.parentNode.id].elementConfig.value[event.target.id] = event.target.value;  
+    } else {
+      delete updatedFormInputsOne[event.target.parentNode.id].elementConfig.value[event.target.id]
+    };
+    if(updatedFormInputsOne[event.target.parentNode.id].errorMessage !== null) {
+      updatedFormInputsOne[event.target.parentNode.id].errorMessage = null;
+    };
+  } 
+  else {
+    updatedFormInputsOne[event.target.id].elementConfig.value = event.target.value;
+    if(updatedFormInputsOne[event.target.id].errorMessage !== null) {
+      updatedFormInputsOne[event.target.id].errorMessage = null;
+      updatedFormInputsOne[event.target.id].elementConfig.className = 'form-control';
+    };
   };
-  this.setState({formInputs: updatedFormInputs});
-};
+  this.setState({formInputs: updatedFormInputsOne});
+}
 
+submitDataHandlerFormOne = (event) => {
+  event.preventDefault();
+  const updatedFormInputsOne = {...this.state.formInputs};
+  // Form validation goes here
+  // Example validation for input fields
+  if(updatedFormInputsOne['name'].elementConfig.value === '') {
+    updatedFormInputsOne['name'].elementConfig.className = 'form-control is-invalid';
+    updatedFormInputsOne['name'].errorMessage= "can't be blank";
+  };
+  // Example validation for test area fields
+  if(updatedFormInputsOne['description'].elementConfig.value === '') {
+    updatedFormInputsOne['description'].elementConfig.className = 'form-control is-invalid';
+    updatedFormInputsOne['description'].errorMessage= "can't be blank";
+  };
+  // Example validation for chekbox fields
+  if(Object.keys(updatedFormInputsOne['checkboxes'].elementConfig.value).length === 0) {
+    updatedFormInputsOne['checkboxes'].errorMessage = "can't be blank";
+  };
+  // Example validation for dropdown fields
+  if(updatedFormInputsOne['dropdown'].elementConfig.value === 'Please select one') {
+    updatedFormInputsOne['dropdown'].elementConfig.className = 'form-control is-invalid';
+    updatedFormInputsOne['dropdown'].errorMessage = "can't be blank";
+  };
+  //----------- Form validation must precede api call to form submission.-----------
+  // Make api call to form submission
+  // Clear form values after form submission
+  updatedFormInputsOne['name'].elementConfig.value = '';
+  updatedFormInputsOne['description'].elementConfig.value = '';
+  updatedFormInputsOne['dropdown'].elementConfig.value = 'Please select one';
+  updatedFormInputsOne['checkboxes'].elementConfig.value = {};
+  for(let i in updatedFormInputsOne['checkboxes'].options) {
+    updatedFormInputsOne['checkboxes'].options[i].checked = false;
+  };
+  // render flash message
+  this.setState({formInputs:updatedFormInputsOne}) 
+}
 ```
 Call the component
 ```

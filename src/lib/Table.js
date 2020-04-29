@@ -84,7 +84,7 @@ class Table extends Component {
       
       display = ( 
         <div className='table-responsive'>
-          <table className={this.props.border === undefined || this.props.border === false ? 'table table-hover' : 'table table-hoverborder-left border-right border-bottom' }>
+          <table className={this.props.border === undefined || this.props.border === false ? 'table table-hover' : 'table table-hover table-bordered' }>
             <thead className={this.props.headColor === undefined || this.props.headColor === null ? `thead-light` : `thead-${this.props.headColor}`}>
               <tr>
                 {headEl}

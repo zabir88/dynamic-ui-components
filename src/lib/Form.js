@@ -27,10 +27,11 @@ const form = (props) => {
           inputElement.push (
             <div className = 'form-group'> 
               {formElement.label === undefined ? null : <label>{formElement.label}</label> }
+              {formElement.errorMessage === (undefined || null || '') ? null : <div className = 'text-danger'>{formElement.errorMessage}</div>}
               { formElement.options.map((option, i) => (
                   <div className = "form-check" key = {i} >
                     <label className = "form-check-label" id = {formElement.elementConfig.id}>
-                      <input {...formElement.elementConfig} defaultChecked = {option.defaultChecked} value = {option.value} id = {`${i+1}`} onChange = {props.changed} /> 
+                      <input {...formElement.elementConfig} checked = {option.checked} value = {option.value} id = {`${i}`} onChange = {props.changed} /> 
                       {option.displayValue}
                     </label>
                   </div>
@@ -39,24 +40,12 @@ const form = (props) => {
             </div> 
           );
         }
-        // else if(formElement.elementConfig.type === 'radio') {
-        //   inputElement.push(
-        //     <div>
-        //       <label>{formElement.elementConfig.label}</label>
-              
-        //       <label className="form-check-label">
-        //         <input {...formElement.elementConfig} value={formElement.value} id={formElement.id} onChange={props.changed} /> 
-        //         {formElement.elementConfig.displayValue}
-        //       </label>
-        //     </div>
-        //   );
-        // }
         else {
           inputElement.push(
             <div className = 'form-group'>
               { formElement.label === undefined || formElement.label === null ? null : <label>{formElement.label}</label> }
-              <input {...formElement.elementConfig} onChange = {props.changed} />
-              {formElement.errorMessage === undefined ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
+              <input {...formElement.elementConfig}  onChange = {props.changed} />
+              {formElement.errorMessage === (undefined || null || '') ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
             </div> 
           );
         }
@@ -68,7 +57,7 @@ const form = (props) => {
           <div className='form-group'>
             { formElement.label === undefined ? null : <label>{formElement.label}</label> }
             <textarea {...formElement.elementConfig} onChange = {props.changed} />
-            {formElement.errorMessage === undefined ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
+            {formElement.errorMessage === (undefined || null || '') ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
           </div>
         );
         break;
@@ -85,7 +74,7 @@ const form = (props) => {
                 </option>))
               }
             </select>
-            {formElement.errorMessage === undefined ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
+            {formElement.errorMessage === (undefined || null || '') ? null : <div className = 'text-center text-danger'>{formElement.errorMessage}</div>}
           </div>
         );
         break;
