@@ -31,7 +31,7 @@ const form = (props) => {
               { formElement.options.map((option, i) => (
                   <div className = "form-check" key = {i} >
                     <label className = "form-check-label" id = {formElement.elementConfig.id}>
-                      <input {...formElement.elementConfig} checked = {option.checked} value = {option.value} id = {`${i}`} onChange = {props.changed} /> 
+                      <input {...formElement.elementConfig} checked = {option.checked} value = {option.value} id = {option.id} onChange = {props.changed} /> 
                       {option.displayValue}
                     </label>
                   </div>

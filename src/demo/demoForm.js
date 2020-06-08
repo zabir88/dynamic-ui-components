@@ -27,9 +27,9 @@ class demoForm extends Component {
           value: {}
         },
         options: [
-          {value: 'option one', displayValue: 'Option One', checked: false},
-          {value: 'option two', displayValue: 'Option Two', checked: false},
-          {value: 'option three', displayValue: 'Option Three', checked: false}
+          {value: 'option one', displayValue: 'Option One', checked: false, id: 'option-one'},
+          {value: 'option two', displayValue: 'Option Two', checked: false, id: 'option-two'},
+          {value: 'option three', displayValue: 'Option Three', checked: false, id: 'option-three'}
         ]
       },
       dropdown: {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Table, Pagination} from '../lib';
 
 class demoTableAndPagination extends Component { 
+  
   state = {
     tableData: {
       head: ['Company', 'Founded'],
@@ -9,7 +10,8 @@ class demoTableAndPagination extends Component {
         {value: ['Google LLC', '1998'], route: 'https://en.wikipedia.org/wiki/Google'},
         {value: ['Amazon Inc','1994'], route: 'https://en.wikipedia.org/wiki/Amazon_(company)'},
         {value: ['Facebook Inc', '2004'], route: 'https://en.wikipedia.org/wiki/Facebook'},
-        {value: ['Microsoft Corporation', '1975'], route: 'https://en.wikipedia.org/wiki/Microsoft'}
+        {value: ['Microsoft Corporation', '1975'], route: 'https://en.wikipedia.org/wiki/Microsoft'},
+        {value: ['IBM', '1911'], route: 'https://en.wikipedia.org/wiki/IBM'}
       ]     
     },
     pagination: {
@@ -86,11 +88,14 @@ class demoTableAndPagination extends Component {
           clickable = {true} 
           checkbox = {true} 
           border = {true} 
-          headColor = {'dark'}
+          headColor = {'light'}
           selectAllRow = {this.selectAllRowHandler.bind(this)}
           selectEachRow = {this.selectEachRowHandler.bind(this)}
           goTo = {this.goToHandler.bind(this)}
+          scrollable = {true}
+          scrollHeight = {'200px'}
          /> 
+       
         <br/>
         <Pagination 
           links = {this.state.pagination.links} 

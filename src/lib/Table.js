@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './Table.css';
 
 class Table extends Component {
 
@@ -28,6 +29,7 @@ class Table extends Component {
 
   render () {
     let display;
+  
     if(this.props.data === undefined || this.props.data === null) {
       display = null;
     }
@@ -35,19 +37,18 @@ class Table extends Component {
       // head elements
       let headEl = [];
       if(this.props.checkbox === true) {
-        headEl.push(
+        headEl.push (
           <th key = {-1}>
             <input 
               type = 'checkbox' 
               style = {{'cursor' : 'pointer'}} 
-              value = {this.props.data.body.map(i => i.value) }
+              value = {this.props.data.body.map(i => i.value)}
               onChange = {this.selectAllHandler.bind(this)}
               onClick = {this.props.selectAllRow}
             />
           </th>
         )
       };
-      
       for (let i in this.props.data.head) {
         headEl.push(
           <th key = {i}>
@@ -55,8 +56,8 @@ class Table extends Component {
           </th>
         )
       };
-
-      //body elements
+    
+      /// body elements
       let bodyEl = [];    
       for(let eachData in this.props.data.body) {
         bodyEl.push (
@@ -79,12 +80,31 @@ class Table extends Component {
               ))
             }
           </tr>
-        );        
+        );       
       };
       
+      let scrollableTableClasses = 'table-responsive';
+      let tableBorderClasses = 'table table-hover';
+      if(this.props.border && this.props.scrollable) {
+        scrollableTableClasses = 'table-responsive scrollTableWrapper scrollbar';
+        tableBorderClasses = 'table table-hover table-bordered';
+      } 
+      else if(this.props.border && !this.props.scrollable) {
+        scrollableTableClasses = 'table-responsive';
+        tableBorderClasses = 'table table-hover table-bordered';
+      } 
+      else if(!this.props.border && this.props.scrollable) {
+        scrollableTableClasses = 'table-responsive scrollTableWrapper scrollbar border';
+        tableBorderClasses = 'table table-hover';  
+      } 
+      else if(!this.props.border && !this.props.scrollable) {
+        scrollableTableClasses = 'table-responsive';
+        tableBorderClasses = 'table table-hover border';
+      };
+
       display = ( 
-        <div className='table-responsive'>
-          <table className={this.props.border === undefined || this.props.border === false ? 'table table-hover' : 'table table-hover table-bordered' }>
+        <div className={scrollableTableClasses} style={this.props.scrollable ? {'height': this.props.scrollHeight} : null}>
+          <table className={tableBorderClasses}>
             <thead className={this.props.headColor === undefined || this.props.headColor === null ? `thead-light` : `thead-${this.props.headColor}`}>
               <tr>
                 {headEl}
