@@ -66,9 +66,9 @@ this.state = {
         value: {}
       },
       options: [
-        {value: 'option one', displayValue: 'Option One', checked: false},
-        {value: 'option two', displayValue: 'Option Two', checked: false},
-        {value: 'option three', displayValue: 'Option Three', checked: false}
+        {value: 'option one', displayValue: 'Option One', checked: false, id: 'option-one'},
+        {value: 'option two', displayValue: 'Option Two', checked: false, id: 'option-two'},
+        {value: 'option three', displayValue: 'Option Three', checked: false, id: 'option-three'}
       ]
     },
     dropdown: {
@@ -337,16 +337,19 @@ Call the component
 
 ## Table
 ### Props
-| Name        | Type     | Description                                                            |
-| ------------|:--------:| -----------------------------------------------------------------------|
-| data        | Object   | Describes the data presented. Please follow the example below.         |
-| border      | Boolean  | Adds border to the table if true. Default is false.                    |
-| headColor   | String   | Takes 'light' or 'dark' as string values. Default 'light'              |
-| clickable   | Boolean  | If true then pass goTo props to navigate.                              |
-| checkbox    | Boolean  | If true then it adds an additional column of checkboxes.               |
-| goTo        | Function | Navigates to a given route when a row in the table is clicked.         |
-| selectAllRow| Function | Returns all input value attribute of each row.                         |
- selectEachRow| Function | Returns selected input value attribute .                               |
+| Name         | Type     | Description                                                            |
+| -------------|:--------:| -----------------------------------------------------------------------|
+| data         | Object   | Describes the data presented. Please follow the example below.         |
+| border       | Boolean  | Adds border to the table if true. Default is false.                    |
+| headColor    | String   | Takes 'light' or 'dark' as string values. Default 'light'              |
+| clickable    | Boolean  | If true then pass goTo props to navigate.                              |
+| checkbox     | Boolean  | If true then it adds an additional column of checkboxes.               |
+| goTo         | Function | Navigates to a given route when a row in the table is clicked.         |
+| selectAllRow | Function | Returns all input value attribute of each row.                         |
+| selectEachRow| Function | Returns selected input value attribute .                               |
+| scrollable   | Boolean  | Makes the table vertically scrollable. Requires scrollHeight props.    |
+| scrollHeight | String   | Maximum vertical height of the table to make it scrollable.            |
+
 
 Use case example:
 
