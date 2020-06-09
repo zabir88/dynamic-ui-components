@@ -65,11 +65,11 @@ this.state = {
         id: 'checkboxes',
         value: {}
       },
-      options: [
-        {value: 'option one', displayValue: 'Option One', checked: false, id: 'option-one'},
-        {value: 'option two', displayValue: 'Option Two', checked: false, id: 'option-two'},
-        {value: 'option three', displayValue: 'Option Three', checked: false, id: 'option-three'}
-      ]
+      options: {
+        options1: {value: 'option one', displayValue: 'Option One', checked: false},
+        options2: {value: 'option two', displayValue: 'Option Two', checked: false},
+        options3: {value: 'option three', displayValue: 'Option Three', checked: false}
+      }
     },
     dropdown: {
       elementType: 'select',
