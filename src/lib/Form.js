@@ -24,16 +24,22 @@ const form = (props) => {
           );
         }
         else if(formElement.elementConfig.type === 'checkbox') {
+          let checkboxItems = [];
+          for (let c in formElement.options) {
+            checkboxItems.push (
+              <label className = "form-check-label" id = {formElement.elementConfig.id}>
+                <input {...formElement.elementConfig} checked = {formElement.options[c].checked} value = {formElement.options[c].value} id = {c} onChange = {props.changed} /> 
+                {formElement.options[c].displayValue}
+              </label>
+            )
+          };
           inputElement.push (
             <div className = 'form-group'> 
               {formElement.label === undefined ? null : <label>{formElement.label}</label> }
-              {formElement.errorMessage === (undefined || null || '') ? null : <div className = 'text-danger'>{formElement.errorMessage}</div>}
-              { formElement.options.map((option, i) => (
+              {formElement.errorMessage === null || formElement.errorMessage === undefined || formElement.errorMessage === '' ? null : <div className = 'text-danger'>{formElement.errorMessage}</div>}
+              { checkboxItems.map((option, i) => (
                   <div className = "form-check" key = {i} >
-                    <label className = "form-check-label" id = {formElement.elementConfig.id}>
-                      <input {...formElement.elementConfig} checked = {option.checked} value = {option.value} id = {option.id} onChange = {props.changed} /> 
-                      {option.displayValue}
-                    </label>
+                    {option}
                   </div>
                 ))
               }  

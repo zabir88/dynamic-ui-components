@@ -87,7 +87,7 @@ class demoTableAndPagination extends Component {
           data = {this.state.tableData} 
           clickable = {true} 
           checkbox = {true} 
-          border = {true} 
+          border = {false} 
           headColor = {'light'}
           selectAllRow = {this.selectAllRowHandler.bind(this)}
           selectEachRow = {this.selectEachRowHandler.bind(this)}
